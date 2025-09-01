@@ -28,6 +28,15 @@
 
 Lectura y análisis del artículo [Spatial transcriptomics identifies molecular niche dysregulation associated with distal lung remodeling in pulmonary fibrosis](https://www.nature.com/articles/s41588-025-02080-x), para el trabajo de Miguel. 
 
+Por hacer: 
+
++ Los datos estan libres? 
++ Qué plataforma se utiliza? XENIUM
++ Construir un set de datos de pruba, útiles para testear en flujo de trbaajo.
++ Cómo funciona Xenium? Cosnideraciones de la segmentación? Complejidad del clustering. 
+
+
+
 ---
 
 ### RNAseq: Pablo
@@ -59,7 +68,7 @@ Para el análisis transcripómico, **lo ideal sería tener al menos triplicado b
 
 + Proporciones celulres !
 + Ensamblae transcriptómico de líneas celulares
-+ Qué computadora utilizaré y cuáles son sus características?
++ Qué computadora utilizaré y cuáles son sus características? Si es Windows, puedo utlizar WSL con todos los recursos computacionales del equipo.
 + Parámetros experiemntales RNAseq Bulk
 
 ---
