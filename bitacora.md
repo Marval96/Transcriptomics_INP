@@ -31,9 +31,14 @@ Lectura y análisis del artículo [Spatial transcriptomics identifies molecular 
 
 
 
+
 ---
 
 ### **Pendientes:**
+
++ Proporciones celulres !
++ Ensamblae transcriptómico de líneas celulares
++ Qué computadora utilizaré y cuáles son sus características?
 
 ---
 
