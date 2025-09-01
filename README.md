@@ -1,6 +1,6 @@
 # **Spatial_Transcriptomics_INP**
 
-Informacíon y material relacionado con los proyectos de transcriptómica espacial del IPN. 
+Informacíon y material relacionado con los proyectos transcriptómicos del IPN. 
 
 ![STQ](spatial.png)
 
