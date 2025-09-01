@@ -1,4 +1,4 @@
-# **Spatial_Transcriptomics_INP**
+# **Transcriptomics INP**
 
 Informacíon y material relacionado con los proyectos transcriptómicos del IPN. 
 
