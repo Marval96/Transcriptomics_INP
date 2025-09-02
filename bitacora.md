@@ -34,6 +34,7 @@ Por hacer:
 + Qué plataforma se utiliza? XENIUM
 + Construir un set de datos de pruba, útiles para testear en flujo de trbaajo.
 + Cómo funciona Xenium? Cosnideraciones de la segmentación? Complejidad del clustering. 
++ Qué es un TMA?
 
 
 
