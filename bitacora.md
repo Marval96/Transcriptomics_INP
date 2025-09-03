@@ -89,9 +89,15 @@ Se hizo una análisis de expresión diferencial, con la plataforma GEO2R. El obj
 
 **Nota:** Para tener una mejor simulación tal vez se podría hacer la coparativa entre el WT y el WT sometido a radiacíon.
 
-+ ¿Cúal es el contexto experimental del grupo?¿Qué genes editaron? 
++ ¿Cúal es el contexto experimental del grupo?¿Qué genes editaron?
 
+**Tarea:** hacer la expresión diferencial entre WT y WT irradiado, de la línea FaDu. Es interesante saber que genes y vías se enriquecen tras recibir la lo dosis de radiacíon. La radioterapía genera daño genómico, lo mismo que sucede en AF, son dos condiciones similares que podrían orientarnos en el análisis de nuestro transcriptoma. 
 
++ Lo ideas sería tener datos FaDu+FA: buscar el set de datos
++ STING tiene relación con la misma clase de ruptura que induce FA? De ser así las comparativas y extrapolaciones serían más relevantes. 
++ El punto de corte de log2fc debe ser 1.5
++ Compartir resultados con Ulises y datos HI-C.
++ Explorar el enriquecimiento con ShinyGO.
 ---
 
 ### **Pendientes:**
