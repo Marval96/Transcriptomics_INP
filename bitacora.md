@@ -63,14 +63,44 @@ Para el análisis transcripómico, **lo ideal sería tener al menos triplicado b
 
 + Tip: se puede prorizar aumentar el número de replicas aunque se tengan menos reads.
 
+> Septiembre 3, 2025
+
+**¿Qué son las céulas FaDu?**
+
+Es una línea celular humana derivada de un carcinoma de células escamosas de la hipofaringe. Las FaDu son conocidas por su crecimiento robusto y suelen emplearse en ensayos para comprender la proliferación de células cancerosas, la respuesta a agentes terapéuticos y la expresión de genes relacionados con la progresión del cáncer y la metástasis.
+
+En la investigación científica, las células FaDu han sido fundamentales para examinar la eficacia de los tratamientos de radioterapia y quimioterapia, proporcionando información sobre las respuestas celulares al daño del ADN y los mecanismos de reparación. La versatilidad y relevancia de las células FaDu las convierten en un valioso modelo para la investigación oncológica, contribuyendo al desarrollo de terapias dirigidas y a la comprensión de la biología celular del cáncer a nivel molecular.
+
+![FaDU](data_bitacora/FaDu.webp)
+
+| Característica            | Valor       |
+|----------------------------|-------------|
+| Edad                       | 56 años     |
+| Género                     | Hombre      |
+| Etnia                      | Asiático    |
+| Morfología                 | Epitelial   |
+| Propiedades de crecimiento | Adherente   |
+
+Las líneas celulares isogénicas son pares (o conjuntos) de líneas celulares genéticamente idénticas, excepto por una mutación específica introducida a propósito, lo que permite estudiar con claridad la función de ese gen o variante. 
+
+En [GEO](https://www.ncbi.nlm.nih.gov/geo/) existe un transcriptoma RNAseq, de células FaDu isogénicas editadas con Cas9, en el cual analizan el efecto del KO de STING y radioterapia. El número de acceso es: [GSE147085](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE147085). El conjunto de datos se localizo a través de [OmicsDI](https://www.omicsdi.org/).
+
+Se hizo una análisis de expresión diferencial, con la plataforma GEO2R. El objetivo fue buscar en los DEG los genes de interés de la línea FaDu trabajada por el grupo, enfocados en genes asociados a la remodelación de matriz extracelular. Por los resultados encontrados, es muy probable que encontremos los genes de interés en el transcriptoma del grupo. 
+
+**Nota:** Para tener una mejor simulación tal vez se podría hacer la coparativa entre el WT y el WT sometido a radiacíon.
+
++ ¿Cúal es el contexto experimental del grupo?¿Qué genes editaron? 
+
+
 ---
 
 ### **Pendientes:**
 
-+ Proporciones celulres !
-+ Ensamblae transcriptómico de líneas celulares
++ Proporciones celulares !
++ Ensamblaje transcriptómico de líneas celulares
 + Qué computadora utilizaré y cuáles son sus características? Si es Windows, puedo utlizar WSL con todos los recursos computacionales del equipo.
-+ Parámetros experiemntales RNAseq Bulk
++ Parámetros experimentales RNAseq Bulk
++ Cuál es el flujo de trabajo del NCBI en datos RNAseq bulk?
 
 ---
 
