@@ -2,9 +2,11 @@
 
 ## Información general:
 
-+ Contacto: Biol.Exp. Raúl Valderrama: jhonatanraulm@gmail.com
+Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 
 **Objetivo:** diseñar e implentar el flujos de trabajo bioinformáticos para el análsis de datos transcriptómicos. 
+
++ Contacto: Biol.Exp. Raúl Valderrama: jhonatanraulm@gmail.com
 
 ---
 
@@ -40,7 +42,7 @@ Por hacer:
 
 ---
 
-### RNAseq: Pablo
+### RNAseq: FaDu
 
 > Septiembre 1, 2025
 
@@ -98,6 +100,44 @@ Se hizo una análisis de expresión diferencial, con la plataforma GEO2R. El obj
 + El punto de corte de log2fc debe ser 1.5
 + Compartir resultados con Ulises y datos HI-C.
 + Explorar el enriquecimiento con ShinyGO.
+
+> Septiembre 4, 2025
+
+**Análisis transcriptómico FaDU**
+
+El trabajo del cual derivan estos datos de secuenciación es: [STING enhances cell death through regulation of reactive oxygen species and DNA damage](https://www.nature.com/articles/s41467-021-22572-8). Resumen: La **resistencia a los agentes que dañan el ADN es una causa significativa de fracaso del tratamiento** y malos resultados en oncología. Para identificar reguladores no reconocidos de supervivencia celular realizamos una pantalla CRISPR-Cas9 de genio entero usando el tratamiento con **radiación ionizante como presión selectiva**, e identificamos **STING (estimulador de genes de interferón) como un regulador intrínseco de supervivencia celular**. Mostramos que STING regula un programa transcripcional que **controla la generación de especies reactivas de oxígeno (ROS)**, y que la pérdida STING altera la homeostasis ROS para reducir el daño del ADN y causar resistencia terapéutica. De acuerdo con estos datos, el análisis de los tumores de los especímenes de pacientes con **carcinoma de células escamosas de cabeza y cuello** muestran que la expresión **STING baja se asocia con peores resultados**. También demostramos que la activación farmacológica de **STING mejora los efectos de la radiación ionizante** in vivo, proporcionando una justificación para las combinaciones terapéuticas de agonistas STING y agentes dañinos de ADN. Estos resultados destacan un papel de STING que está más allá de su función canónica en la **detección de dinucleotida cíclica y ADN**, e identifican a **STING como un regulador de la homeostasis celular ROS y la susceptibilidad de células tumorales a agentes reactivos dependientes del oxígeno.**
+
+**Las células cancerígenas con poco STING generan menos radicales libres cuando se les daña el ADN, así que se dañan menos y resisten más la radioterapia. Si se activa STING con fármacos, las células tumorales acumulan más daño y la terapia funciona mejor.**
+
+Análisis de expresión diferencial entre FaDu WT y Fadu irrWT:
+
+Los punto de corte para el Fold Change es de 1.5 y p.adj < 0.05.
+
+| Cambio en expresión (fold change) | Log2FC (valor a usar en GEO2R) | Interpretación |
+|---------------------------------|-------------------------------|----------------|
+| 1.5×                             | 0.58                          | Cambio moderado (50% más o menos) |
+| 2×                               | 1                             | Duplicación o reducción a la mitad |
+| 3×                               | 1.58                          | Triplicación o reducción a 1/3 |
+| 4×                               | 2                             | Cuadruplicación o reducción a 1/4 |
+| 8×                               | 3                             | Octuplicación o reducción a 1/8 |
+
+El análisis diferencial identificó 366 genes diferencialmente expresados, de los cuales 82 estaban subexpresados y 284 sobreexpresados (Figura 1B). El análisis de enriquecimiento funcional de los genes sobreexpresados reveló asociación con procesos de estructura y remodelación de la matriz extracelular y señalización mediada por citocinas.
+
+Posteriormente, se realizó un análisis de intersección entre tres conjuntos de datos: genes asociados a neo-loops, genes identificados por RNA-seq y genes correspondientes al listado de anticuerpos disponibles del grupo (Figura 3). Los resultados se resumen a continuación:
+
++ Neo-loops vs RNA-seq: tres genes compartidos, COL8A1, SPRR1A y SPRR1B.
+
++ Neo-loops vs Anticuerpos: un único gen compartido, COL1A1.
+
++ RNA-seq vs Anticuerpos: cuatro genes comunes TIMP3, FN1, MMP1, MMP2, y MMP13.
+
++ Intersección entre los tres conjuntos: No se identificaron genes compartidos
+
+Todo el material relacionado se encuentra disponible [aquí](/rnaseq_fadu).
+
+
+
+
 ---
 
 ### **Pendientes:**
