@@ -38,6 +38,12 @@ Por hacer:
 + Cómo funciona Xenium? Cosnideraciones de la segmentación? Complejidad del clustering. 
 + Qué es un TMA?
 
+> Septimebre 5, 2025
+
+**Métodos del artúiclo base para el análasis**
+
+
+
 
 
 ---
@@ -135,6 +141,11 @@ Posteriormente, se realizó un análisis de intersección entre tres conjuntos d
 
 Todo el material relacionado se encuentra disponible [aquí](/rnaseq_fadu).
 
+> Septiembre 5, 2025
+
+Análisis de expresión diferencial entre FaDu WT y Fadu IrrKo:
+
+Los punto de corte para el Fold Change es de 1.5 y p.adj < 0.05.
 
 
 
