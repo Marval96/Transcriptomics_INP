@@ -180,6 +180,8 @@ Sí nostros procesamos los datos algunas ventajas son:
 > + Datos crudos + análisis bioinformático = más tiempo y trabajo, pero resultados más confiables y con mayor aceptación académica.
 > ¿Habrá diferencias? Sí, especialmente en el **número y tipo de genes identificados como diferencialmente expresados** y en la **resolución de los análisis de enriquecimiento**.
 
+**RNAseq con datos en crudo:**
+
 
 ---
 
