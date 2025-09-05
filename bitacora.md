@@ -143,10 +143,42 @@ Todo el material relacionado se encuentra disponible [aquí](/rnaseq_fadu).
 
 > Septiembre 5, 2025
 
-Análisis de expresión diferencial entre FaDu WT y Fadu IrrKo:
+Análisis de expresión diferencial entre **FaDu WT y Fadu IrrKo:**
 
 Los punto de corte para el Fold Change es de 1.5 y p.adj < 0.05.
 
+El análisis diferencial identificó 410 genes diferencialmente expresados, de los cuales 194 subexpresados y 216 sobreexpresados. El análisis de enriquecimiento funcional de los genes sobreexpresados reveló asociación con procesos de estructura y remodelación de la matriz extracelular, señalización mediada por citocinas y formación de la envoltura córnea.
+
+Posteriormente, se realizó un análisis de intersección entre tres conjuntos de datos: genes asociados a neo-loops, genes identificados por RNA-seq y genes correspondientes al listado de anticuerpos disponibles del grupo (Figura 3). Los resultados se resumen a continuación:
+
++ Neo-loops vs RNA-seq: dos genes compartidos, SPRR1A y SPRR1B.
+
++ Neo-loops vs Anticuerpos: un único gen compartido, COL1A1.
+
++ RNA-seq vs Anticuerpos: tres genes comunes, MMP1, MMP2 y MMP13.
+
++ Intersección entre los tres conjuntos: No se identificaron genes compartidos
+
+**Interpretación:** ambas comparativas de la línea FaDu, presentan una escasa intersección entre los conjuntos evaluados, lo que sugiere una superposición limitada de genes entre las diferentes fuentes de datos.
+
+**Sugerencia:** dejar de lado el análisis con GEO2R... considero que podríamos obtener mejores resultados si manejamos los datos en crudo.
+
+GEO2R es útil para **una exploración rápida** porque permite obtener genes diferencialmente expresados sin necesidad de programar. Tiene **limitaciones claras**:
+
+* Trabaja sobre datos **ya procesados/normalizados**. 
+* No ofrece control total sobre los **parámetros de normalización, filtrado o estadísticos**.
+
+Sí nostros procesamos los datos algunas ventajas son:
+
+* **Consistencia** en el preprocesamiento.
+* **Flexibilidad** en los umbrales y métodos estadísticos.
+* Posibilidad de incorporar **modelos más realistas**
+* Resultados más **robustos y reproducibles**.
+
+
+> + GEO2R = exploratorio, rápido, para validar ideas iniciales.
+> + Datos crudos + análisis bioinformático = más tiempo y trabajo, pero resultados más confiables y con mayor aceptación académica.
+> ¿Habrá diferencias? Sí, especialmente en el **número y tipo de genes identificados como diferencialmente expresados** y en la **resolución de los análisis de enriquecimiento**.
 
 
 ---
