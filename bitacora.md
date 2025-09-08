@@ -180,7 +180,54 @@ Sí nostros procesamos los datos algunas ventajas son:
 > + Datos crudos + análisis bioinformático = más tiempo y trabajo, pero resultados más confiables y con mayor aceptación académica.
 > ¿Habrá diferencias? Sí, especialmente en el **número y tipo de genes identificados como diferencialmente expresados** y en la **resolución de los análisis de enriquecimiento**.
 
-**RNAseq con datos en crudo:**
+> Septiembre 8, 2025
+
+El analisis de las lecturas en crudo se realiza  en la estacion de trabajo. Para ello se ha instalado Ubuntu y Conda. 
+
+    lsb_release -a
+---
+    > No LSB modules are available.
+        Distributor ID: Ubuntu
+        Description:    Ubuntu 24.04.3 LTS
+        Release:        24.04
+        Codename:       noble
+---
+    conda --version
+---
+    > conda 25.7.0
+
+Comando para acceder a Windows desde Linux:
+
+    /mnt/c/Users/jhona/
+
+Las secuencacias se descargaron del **SRA-NCBI**:
+
++ Coleccion de los datos: https://www.ncbi.nlm.nih.gov/biosample/?cmd=historysearch&querykey=15
++ Datos en SRA: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA612970&o=acc_s%3Aa
+
+    export PATH=$HOME/rnaseq_fadu/sratoolkit.3.2.1-ubuntu64/bin:$PATH
+---
+     which fastq-dump
+---
+    > /home/jrmarval/rnaseq_fadu/sratoolkit.3.2.1-ubuntu64/bin/fastq-dump
+---
+    fastq-dump --version
+---
+    > fastq-dump : 3.2.1
+
+Si se descarga desde Conda la version de la herramienta es diferente, aunque en teoria asi se vita declarar el Path hacia el binario, es mejor utilizar la version mas reciente.
+
+    conda install bioconda::sra-tools ; 2.10.0
+
+
+
+
+
+
+
+**RNAseq con datos en crudo**
+
+
 
 
 ---
