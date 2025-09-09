@@ -14,7 +14,7 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 
 - [General](#información-general)
 - [ST: Lung](#spatial-transcriptomics-lung)
-- [RNAseq bulk](#rnaseq-pablo)
+- [RNAseq bulk](#rnaseq-fadu)
 - [Pendientes](#pendientes)
 - [Literatura](#literatura)
 
@@ -202,10 +202,9 @@ Comando para acceder a Windows desde Linux:
 
 Las secuencacias se descargaron del **SRA-NCBI**:
 
-+ Coleccion de los datos: https://www.ncbi.nlm.nih.gov/biosample/?cmd=historysearch&querykey=15
++ Coleccion de los datos: https://www.ncbi.nlm.nih.gov/biosample/?cmd=historysearch&querykey=1
 + Datos en SRA: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA612970&o=acc_s%3Aa
 
-    export PATH=$HOME/rnaseq_fadu/sratoolkit.3.2.1-ubuntu64/bin:$PATH
 ---
      which fastq-dump
 ---
@@ -219,13 +218,173 @@ Si se descarga desde Conda la version de la herramienta es diferente, aunque en 
 
     conda install bioconda::sra-tools ; 2.10.0
 
+> Septiembre 9, 2025
 
+Conexión local: **para que nunca mueran los procesos en Windows es impoetante no cerrar la sesión de usario y mucho menos se debe apagar el equipo.
+Se puede cambiar de usario pero sin cerrar la sesión** Conexión local SHH:
 
-
-
-
+    ssh jrmarval@192.168.3.169
 
 **RNAseq con datos en crudo**
+
+1. Bajar los datos del SRA:
+
+| Característica             | Valor                                           |
+|-----------------------------|------------------------------------------------|
+| BioProject                  | PRJNA612970                                    |
+| Consent                     | public                                         |
+| Assay Type                  | RNA-Seq                                        |
+| AvgSpotLen                  | 202                                            |
+| cell_line                   | FaDu                                           |
+| Center Name                 | GEO                                            |
+| DATASTORE filetype          | fastq, run.zq, sra                             |
+| DATASTORE provider          | gs, ncbi, s3                                  |
+| DATASTORE region            | gs.us-east1, ncbi.public, s3.us-east-1       |
+| Instrument                  | Illumina NovaSeq 6000                          |
+| LibraryLayout               | PAIRED                                         |
+| LibrarySelection            | cDNA                                           |
+| LibrarySource               | TRANSCRIPTOMIC                                 |
+| Organism                    | Homo sapiens                                   |
+| Platform                    | ILLUMINA                                       |
+| ReleaseDate                 | 2021-03-07                                    |
+| version                     | 1                                              |
+| source_name                 | Head and neck tumor                            |
+| SRA Study                   | SRP253044                                      |
+| tissue                      | Head and neck tumor cell line                  |
+
+
+---
+
+| # | Run        | BioSample    | Bases   | Bytes   | Experiment  | Genotype | GEO_Accession | Create_date           | Sample Name   |
+|---|------------|--------------|--------|---------|------------|----------|---------------|---------------------|---------------|
+| 1 | SRR11319298 | SAMN14389440 | 9.07 G | 2.60 Gb | SRX7923629 | WT       | GSM4416566    | 2020-03-17 18:44:00 | GSM4416566    |
+| 2 | SRR11319299 | SAMN14389439 | 8.16 G | 2.35 Gb | SRX7923630 | WT       | GSM4416567    | 2020-03-17 16:23:00 | GSM4416567    |
+| 3 | SRR11319300 | SAMN14389438 | 9.89 G | 2.84 Gb | SRX7923631 | WT       | GSM4416568    | 2020-03-17 14:49:00 | GSM4416568    |
+| 4 | SRR11319301 | SAMN14389437 | 9.65 G | 2.77 Gb | SRX7923632 | STING-/- | GSM4416569    | 2020-03-18 00:01:00 | GSM4416569    |
+| 5 | SRR11319302 | SAMN14389436 | 11.01 G | 3.17 Gb | SRX7923633 | STING-/- | GSM4416570    | 2020-03-17 23:44:00 | GSM4416570    |
+| 6 | SRR11319303 | SAMN14389435 | 12.05 G | 3.45 Gb | SRX7923634 | STING-/- | GSM4416571    | 2020-03-18 03:28:00 | GSM4416571    |
+| 7 | SRR11319304 | SAMN14389434 | 11.34 G | 3.26 Gb | SRX7923635 | IrrWT       | GSM4416572    | 2020-03-18 02:46:00 | GSM4416572    |
+| 8 | SRR11319305 | SAMN14389433 | 10.86 G | 3.14 Gb | SRX7923636 | IrrWT       | GSM4416573    | 2020-03-18 00:01:00 | GSM4416573    |
+| 9 | SRR11319306 | SAMN14389432 | 10.47 G | 2.99 Gb | SRX7923637 | IrrWT       | GSM4416574    | 2020-03-17 22:20:00 | GSM4416574    |
+| 10 | SRR11319307 | SAMN14389431 | 9.17 G | 2.62 Gb | SRX7923638 | IrrSTING-/- | GSM4416575    | 2020-03-17 14:35:00 | GSM4416575    |
+| 11 | SRR11319308 | SAMN14389430 | 8.48 G | 2.44 Gb | SRX7923639 | IrrSTING-/- | GSM4416576    | 2020-03-17 14:43:00 | GSM4416576    |
+| 12 | SRR11319309 | SAMN14389429 | 8.30 G | 2.40 Gb | SRX7923640 | IrrSTING-/- | GSM4416577    | 2020-03-17 14:43:00 | GSM4416577    |
+
+
+El código para la descarga se encuentra en el archivo *data_sra.sh*:
+
+    #!/bin/bash
+
+    # Temporizador: inicio
+    START=$(date +%s)
+
+    # Automatizacion de la descarga de los datos de SRA
+    # El comando base para la descarga es: SAMN14389439
+
+    # Descarga manual
+    prefetch SAMN14389440 --progress
+    prefetch SAMN14389439 --progress
+    prefetch SAMN14389438 --progress
+    prefetch SAMN14389431 --progress
+    prefetch SAMN14389430 --progress
+    #prefetch SAMN14389429 --progress
+
+    # Ciclo de descarga... NOTA: el loop solo funciona para la primer muestra porque después pierde conexión con el servidor.
+    # while read SAMPLE; do
+    #     prefetch "$SAMPLE" --progress
+    # done < wt_vs_irrko.txt
+    # done < test.txt
+
+    # Temporizador: fin
+    END=$(date +%s)
+    ELAPSED=$((END-START))
+    echo "Tiempo total de ejecución: $ELAPSED segundos"
+
+    # Aviso por correo 
+    # Cuerpo del correo
+    BODY="La descarga de datos SRA se hizo en: ${MIN}m ${SEC}s (${ELAPSED} segundos)."
+
+    # Envío del correo
+    echo "$BODY" | mail -s "Aviso: Test SHH" jhonatanraulm@gmail.com
+
+    # Fin del script
+    echo "Done"
+
+**Tiempo total de ejecución: 751 segundos**
+
+El formato SRA .está comprimido y no se puede usar directamente para análisis bioinformático.
+
+    > SRR11319298.sra
+      SRR11319299.sra
+      SRR11319300.sra
+      SRR11319307.sra
+      SRR11319308.sra
+      SRR11319309.sra
+
+2. Conversión de los archivos SRA a FASTQ con: fasterq-dump
+ 
+Comando para matar procesos y procesos derivados:
+
+    kill -TERM $(pstree -p 2496 | grep -oP '\d+' )    
+
+El código para convertir el archivo SRA a FASTQ:
+
+    #!/bin/bash
+
+    # Temporizador: inicio
+    START=$(date +%s)
+
+    # Automatizacion de la descarga de los datos de SRA
+    # El comando base para la descarga es: SAMN14389439
+
+    # Descarga manual
+    #prefetch SAMN14389440 --progress
+    #prefetch SAMN14389439 --progress
+    #prefetch SAMN14389438 --progress
+    #prefetch SAMN14389431 --progress
+    #prefetch SAMN14389430 --progress
+    #prefetch SAMN14389429 --progress
+
+    # Convierte a FASTQ
+    #fasterq-dump --split-files SRR11319298.sra --progress
+    #fasterq-dump --split-files SRR11319299.sra --progress
+    #fasterq-dump --split-files SRR11319300.sra --progress
+    #fasterq-dump --split-files SRR11319307.sra --progress
+    #fasterq-dump --split-files SRR11319308.sra --progress
+    #fasterq-dump --split-files SRR11319309.sra --progress
+
+    # Ciclo de trabajo:
+    # NOTA: el loop de descarga  solo funciona para la primer muestra porque después pierde conexión con el servidor.
+
+    mkdir -p fastq_files
+    while read SAMPLE; do
+        # Descarga de datos
+        #prefetch "$SAMPLE" --progress
+        # Convierte a FASTQ, separado por pares y comprimido
+        fasterq-dump --split-files "$SAMPLE" --progress
+    done < sra_wt_vs_irrko.txt
+    mv *.fastq fastq_files
+
+    # Temporizador: fin
+    END=$(date +%s)
+    ELAPSED=$((END-START))
+    echo "Tiempo total de ejecución: $ELAPSED segundos"
+
+    # Aviso por correo
+    # Cuerpo del correo
+    BODY="El cambio de formato de SRA a fastq se hizo en: ${MIN}m ${SEC}s (${ELAPSED} segundos)."
+
+    # Envío del correo
+    echo "$BODY" | mail -s "Aviso: Conserversión de formato" jhonatanraulm@gmail.com
+
+    # Fin del script
+    echo "Done"
+
+Los archivos SRA pesan 15 GB
+Los archivos fastq pesan: 141 GB... podría comprimir pero ahorita le quitaría recursos a Blanca.
+
+
+3. Análisis de calidad: 
 
 
 
