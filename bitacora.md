@@ -402,10 +402,139 @@ Los archivos fastq pesan: 141 GB... podría comprimir pero ahorita le quitaría 
 
 > Septiembre 11, 2025
 
-El análsis de detandrá en lo que configuro las computadorá para conexión remota. Mientras haré el montaje del flujo de trabajo con un set de datos.
-Para correr los datos reales me pondré de acuerdo con Balnca para el uso del equipo.
+El análsis de detendrá en lo que configuro la computadorá para conexión remota. Mientras haré el montaje del flujo de trabajo con un set de datos. Para correr los datos reales me pondré de acuerdo con Balnca para el uso del equipo.
 
 3. Análisis de calidad: 
+
+---
+
+**Set de datos piloto para el flujo de trabajo:**
+
+1. Recortar un archivos fastq pair-end. Este paso nos ayudará a tenr u conjunto de datos que podamos manejar en una computadora personal. Es importante aclarar que no se van a comprimir los archivos sino crear versiones de representativos de ellos, es decir, archivos con una menor cantidad de lecturas que el original. 
+
+Se descargarón un conjunto de lecutras [RNAseq](https://github.com/hartwigmedical/testdata/blob/master/100k_reads_hiseq/TESTX/TESTX_H7YRLADXX_S1_L002_R2_001.fastq.gz) y se renombrarón con base en las mustras de la línea FaDu: 
+
++ SRR11319298_S1_L001_R1_001.fastq.gz  SRR11319298_S1_L001_R2_001.fastq.gz
++ SRR11319299_S2_L001_R1_001.fastq.gz  SRR11319299_S2_L001_R2_001.fastq.gz
+
+El código para el recorte de los archivos esta en el archivo cut.sh y  es el siguiente:
+
+    #!/bin/bash 
+
+    # Iniciar el temporizador
+    start_time=$(date +%s.%N)
+
+    # Script para recortar las lecturas de un archivo fastq.gz 
+    #SRR11319298_S1_L001_R1_001.fastq.gz  SRR11319298_S1_L001_R2_001.fastq.gz
+    # SRR11319299_S2_L001_R1_001.fastq.gz  SRR11319299_S2_L001_R2_001.fastq.gz
+
+    # Recortar los archivos a 10,000 lecturas
+    # Cada lectura Fastq tiene 4 líneas por lo que habrá que recortar 40,000 líneas para llegar a 10,000 lecturas
+
+    # Recorte:
+    # Archivos antes del recorte
+    echo "Archivos antes del recorte:"
+    ls -lh *.f*q.gz
+
+    # Directorio para los archivos recortados
+    mkdir -p cut_fastq
+
+    for sample in *.f*q.gz; do
+        echo "Recortando" $sample 
+        zcat "$sample" | head -40000 | gzip > "cut_fastq/${sample}.tmp"
+        mv "cut_fastq/${sample}.tmp" "cut_fastq/$sample"
+    done
+
+    echo "Ciclo finalizado: resultados en la carpeta cut_fastq"
+
+    # Verificar que los archivos se hayan recortado
+    ls -lh cut_fastq/*.f*q.gz
+
+    # Calcular el tiempo de ejecución
+    end_time=$(date +%s.%N)
+    execution_time=$(echo "$end_time - $start_time" | bc)
+
+    # Convertir segundos a minutos:segundos
+    minutes=$(echo "scale=0; $execution_time / 60" | bc)
+    seconds=$(echo "scale=0; $execution_time % 60" | bc)
+    total_minutes=$(echo "$minutes + ($seconds > 0)" | bc)
+
+    echo "Recorte de los archivos fastq completado. Los resultados se encuentran en la carpeta cut_fastq."
+    echo "Tiempo de ejecución: $minutes minutos $seconds segundos."
+    echo
+
+    # Aviso por correo
+    # Cuerpo del correo
+    BODY="El recorte de los archivos fastq.gz se hizo en: ${total_minutes}."
+
+    # Envío del correo
+    echo "$BODY" | mail -s "Aviso: Recorte de archivos" jhonatanraulm@gmail.com
+
+    # Fin del script
+    echo "Done"
+
+2. Control de calidad
+
+El control de calidad se realizó con el código base de este [repositorio](https://github.com/Marval96/Bash_script/tree/main/quality_control).
+
+    #!/bin/bash
+
+    #-------------------------------------------------------------------------------------------------------------------------------------------------------->
+    echo
+    echo "Hola, $USER !"
+    echo
+    echo -e "Este script realiza un análisis de calidad de datos obtenidos mediante secuenciación de nueva generación (NGS) de tipo paired-end.\n\
+    Utiliza la herramienta FastQC y MultiQC.\n\
+    Primero realiza el análisis de calidad para cada una de las muestras con FastQC y después con MultiQC genera un resumen global más fácil de interpretar."
+    echo
+    echo -e "Recuerda activar el ambiente Conda llamado 'QualityControl' el cual contiene las herramientas necesarias para el análisis.\n\
+    Para tener el ambiente Conda, sigue los siguientes pasos:\n\
+        1. Descargar el archivo QualityControl.yml, el cual contiene el ambiente Conda.\n\
+        2. Generar el ambiente Conda ejecutando: conda env create -f QualityControl.yml\n\
+        3. Activar el ambiente Conda ejecutando: conda activate QualityControl."
+    echo
+    echo "¿Estás listo para ejecutar el análisis? (si/no)"
+    read respuesta
+    echo
+
+    # Comprobación de la respuesta
+    if [[ "$respuesta" == "si" || "$respuesta" == "SI" || "$respuesta" == "Si" ]]; then
+        # Verificar si el ambiente "QualityControl" está activo y si FastQC y MultiQC están disponibles
+        if conda info --envs | grep -q "QualityControl" && command -v fastqc >/dev/null && command -v multiqc >/dev/null; then
+            echo "¡Perfecto! El ambiente 'QualityControl' está activo y contiene FastQC y MultiQC."
+            
+            # Ejecutar el análisis en segundo plano
+            echo "Comenzando el análisis..."
+            nohup ./analisis.sh &
+            pid=$!  # Obtiene el PID del último proceso ejecutado en segundo plano
+            echo "El análisis ha comenzado en segundo plano. El PID es: $pid" 
+            echo "El registro se guardará en el archivo 'nohup.out'. Puedes monitorearlo ejecutando: tail -f nohup.out"
+        else
+            echo "Error: El ambiente 'QualityControl' no está activo o no contiene FastQC y/o MultiQC."
+            echo "Por favor, asegúrate de que el ambiente esté activo y que las herramientas estén instaladas."
+            exit 1
+        fi
+    elif [[ "$respuesta" == "no" || "$respuesta" == "NO" || "$respuesta" == "No" ]]; then
+        echo "Gracias, vuelva pronto, mil besos."
+        exit 0  # Termina el script si la respuesta es no
+    else
+        echo "Respuesta no válida. Por favor, responde con 'si' o 'no'."
+        exit 1  # Termina el script si la respuesta no es válida
+    fi
+    echo
+
+
+3. Alineamiento: STAR 2.7.11b. La instalación de la herramienta fue mediante ¨[Conda](https://anaconda.org/bioconda/star) 
+
+    conda install bioconda::star
+
+El Genoma de referencia y la anotación GTF se obtuvieron de: [Genome assembly GRCh38](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/). 
+
+
+
+4. Ensamblaje
+5. PCA
+6. Expresión diferencial.
 
 ---
 
