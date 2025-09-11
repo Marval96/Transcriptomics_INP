@@ -13,10 +13,32 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 ## Índice
 
 - [General](#información-general)
+- [Recursos computacionales](#recursos-computacionales-bmf-lab)
 - [ST: Lung](#spatial-transcriptomics-lung)
 - [RNAseq bulk](#rnaseq-fadu)
 - [Pendientes](#pendientes)
 - [Literatura](#literatura)
+
+---
+
+### **Recursos computacionales BMF-LAB:**
+
+| Recurso          | Detalle                                  | Implicación práctica                                    |
+| ---------------- | ---------------------------------------- | ------------------------------------------------------- |
+| CPU              | 16 núcleos / 32 hilos, i9-14900K, 64-bit | Muy potente, ideal para multitarea y análisis paralelos |
+| RAM              | 62 GiB                                   | Suficiente para datasets grandes y simulaciones         |
+| Swap             | 16 GiB                                   | Backup de memoria, no se usa mucho                      |
+| Almacenamiento   | 1 TiB HDD virtual                        | Espacio suficiente, I/O limitado                        |
+| GPU              | Basic Render Driver (sin aceleración)    | No hay GPU dedicada, no se puede usar CUDA/OpenCL       |
+| Virtualización   | VT-x                                     | Puedes correr VMs                                       |
+| Vulnerabilidades | Mayoría mitigadas                        | Sistema seguro                                          |
+
+
+¿Hay GPU en windows que no este viendo por suar WSL?
+
+    nvidia-smi
+    lspci | grep -i vga
+    wsl --gpu
 
 ---
 
@@ -41,10 +63,6 @@ Por hacer:
 > Septimebre 5, 2025
 
 **Métodos del artúiclo base para el análasis**
-
-
-
-
 
 ---
 
@@ -252,7 +270,6 @@ Se puede cambiar de usario pero sin cerrar la sesión** Conexión local SHH:
 | SRA Study                   | SRP253044                                      |
 | tissue                      | Head and neck tumor cell line                  |
 
-
 ---
 
 | # | Run        | BioSample    | Bases   | Bytes   | Experiment  | Genotype | GEO_Accession | Create_date           | Sample Name   |
@@ -383,11 +400,12 @@ El código para convertir el archivo SRA a FASTQ:
 Los archivos SRA pesan 15 GB
 Los archivos fastq pesan: 141 GB... podría comprimir pero ahorita le quitaría recursos a Blanca.
 
+> Septiembre 11, 2025
+
+El análsis de detandrá en lo que configuro las computadorá para conexión remota. Mientras haré el montaje del flujo de trabajo con un set de datos.
+Para correr los datos reales me pondré de acuerdo con Balnca para el uso del equipo.
 
 3. Análisis de calidad: 
-
-
-
 
 ---
 
@@ -395,7 +413,6 @@ Los archivos fastq pesan: 141 GB... podría comprimir pero ahorita le quitaría 
 
 + Proporciones celulares !
 + Ensamblaje transcriptómico de líneas celulares
-+ Qué computadora utilizaré y cuáles son sus características? Si es Windows, puedo utlizar WSL con todos los recursos computacionales del equipo.
 + Parámetros experimentales RNAseq Bulk
 + Cuál es el flujo de trabajo del NCBI en datos RNAseq bulk?
 
