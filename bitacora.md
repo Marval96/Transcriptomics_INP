@@ -40,6 +40,22 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
     lspci | grep -i vga
     wsl --gpu
 
+Transferencia de archivos:
+
+Desde tu laptop a la computadora del laboratorio:
+
+    scp archivo.txt usuario_lab@IP_lab:/home/usuario_lab/
+
+Desde la computadora del laboratorio a tu laptop:
+
+    scp usuario_lab@IP_lab:/home/usuario_lab/archivo.txt ~/
+
+Comando para matar procesos y procesos derivados:
+
+    kill -TERM $(pstree -p 2496 | grep -oP '\d+' )
+
+**Nota: ambos comandos se deben correr desde el equipo local no desde el servidor.**
+
 ---
 
 ### Spatial Transcriptomics: Lung 
@@ -292,9 +308,6 @@ El código para la descarga se encuentra en el archivo *data_sra.sh*:
 
     #!/bin/bash
 
-    # Temporizador: inicio
-    START=$(date +%s)
-
     # Automatizacion de la descarga de los datos de SRA
     # El comando base para la descarga es: SAMN14389439
 
@@ -310,19 +323,6 @@ El código para la descarga se encuentra en el archivo *data_sra.sh*:
     # while read SAMPLE; do
     #     prefetch "$SAMPLE" --progress
     # done < wt_vs_irrko.txt
-    # done < test.txt
-
-    # Temporizador: fin
-    END=$(date +%s)
-    ELAPSED=$((END-START))
-    echo "Tiempo total de ejecución: $ELAPSED segundos"
-
-    # Aviso por correo 
-    # Cuerpo del correo
-    BODY="La descarga de datos SRA se hizo en: ${MIN}m ${SEC}s (${ELAPSED} segundos)."
-
-    # Envío del correo
-    echo "$BODY" | mail -s "Aviso: Test SHH" jhonatanraulm@gmail.com
 
     # Fin del script
     echo "Done"
@@ -338,29 +338,14 @@ El formato SRA .está comprimido y no se puede usar directamente para análisis 
       SRR11319308.sra
       SRR11319309.sra
 
-2. Conversión de los archivos SRA a FASTQ con: fasterq-dump
- 
-Comando para matar procesos y procesos derivados:
-
-    kill -TERM $(pstree -p 2496 | grep -oP '\d+' )    
+2. Conversión de los archivos SRA a FASTQ con: fasterq-dump   
 
 El código para convertir el archivo SRA a FASTQ:
 
     #!/bin/bash
 
-    # Temporizador: inicio
-    START=$(date +%s)
-
     # Automatizacion de la descarga de los datos de SRA
     # El comando base para la descarga es: SAMN14389439
-
-    # Descarga manual
-    #prefetch SAMN14389440 --progress
-    #prefetch SAMN14389439 --progress
-    #prefetch SAMN14389438 --progress
-    #prefetch SAMN14389431 --progress
-    #prefetch SAMN14389430 --progress
-    #prefetch SAMN14389429 --progress
 
     # Convierte a FASTQ
     #fasterq-dump --split-files SRR11319298.sra --progress
@@ -382,19 +367,6 @@ El código para convertir el archivo SRA a FASTQ:
     done < sra_wt_vs_irrko.txt
     mv *.fastq fastq_files
 
-    # Temporizador: fin
-    END=$(date +%s)
-    ELAPSED=$((END-START))
-    echo "Tiempo total de ejecución: $ELAPSED segundos"
-
-    # Aviso por correo
-    # Cuerpo del correo
-    BODY="El cambio de formato de SRA a fastq se hizo en: ${MIN}m ${SEC}s (${ELAPSED} segundos)."
-
-    # Envío del correo
-    echo "$BODY" | mail -s "Aviso: Conserversión de formato" jhonatanraulm@gmail.com
-
-    # Fin del script
     echo "Done"
 
 Los archivos SRA pesan 15 GB
@@ -404,137 +376,60 @@ Los archivos fastq pesan: 141 GB... podría comprimir pero ahorita le quitaría 
 
 El análsis de detendrá en lo que configuro la computadorá para conexión remota. Mientras haré el montaje del flujo de trabajo con un set de datos. Para correr los datos reales me pondré de acuerdo con Balnca para el uso del equipo.
 
+> Septiembre 12, 2025
+
+Se realizó de forma exitosa la configuración SSH. El resto del análisis se podrá correr en la máquina del laboratorio. La instalación de las herramientas necesarias se hizo en un ambiente Conda.
+
 3. Análisis de calidad: 
 
----
+El control de calidad se realizó con el código base de este [repositorio](https://github.com/Marval96/Bash_script/tree/main/quality_control). Es importante contar con las librerías Fastqc y MultiQC. El código utlizado para este paso:
+ 
+    #!/bin/bash
 
-**Set de datos piloto para el flujo de trabajo:**
+    # Análisis de Calidad con FastQC y MultiQC
 
-1. Recortar un archivos fastq pair-end. Este paso nos ayudará a tenr u conjunto de datos que podamos manejar en una computadora personal. Es importante aclarar que no se van a comprimir los archivos sino crear versiones de representativos de ellos, es decir, archivos con una menor cantidad de lecturas que el original. 
-
-Se descargarón un conjunto de lecutras [RNAseq](https://github.com/hartwigmedical/testdata/blob/master/100k_reads_hiseq/TESTX/TESTX_H7YRLADXX_S1_L002_R2_001.fastq.gz) y se renombrarón con base en las mustras de la línea FaDu: 
-
-+ SRR11319298_S1_L001_R1_001.fastq.gz  SRR11319298_S1_L001_R2_001.fastq.gz
-+ SRR11319299_S2_L001_R1_001.fastq.gz  SRR11319299_S2_L001_R2_001.fastq.gz
-
-El código para el recorte de los archivos esta en el archivo cut.sh y  es el siguiente:
-
-    #!/bin/bash 
-
-    # Iniciar el temporizador
-    start_time=$(date +%s.%N)
-
-    # Script para recortar las lecturas de un archivo fastq.gz 
-    #SRR11319298_S1_L001_R1_001.fastq.gz  SRR11319298_S1_L001_R2_001.fastq.gz
-    # SRR11319299_S2_L001_R1_001.fastq.gz  SRR11319299_S2_L001_R2_001.fastq.gz
-
-    # Recortar los archivos a 10,000 lecturas
-    # Cada lectura Fastq tiene 4 líneas por lo que habrá que recortar 40,000 líneas para llegar a 10,000 lecturas
-
-    # Recorte:
-    # Archivos antes del recorte
-    echo "Archivos antes del recorte:"
-    ls -lh *.f*q.gz
-
-    # Directorio para los archivos recortados
-    mkdir -p cut_fastq
-
-    for sample in *.f*q.gz; do
-        echo "Recortando" $sample 
-        zcat "$sample" | head -40000 | gzip > "cut_fastq/${sample}.tmp"
-        mv "cut_fastq/${sample}.tmp" "cut_fastq/$sample"
+    echo "Iniciando análisis de calidad con FastQC para cada archivo..."
+    mkdir -p FastQC_Results
+    for file in *.f*q; do
+    #for file in *.f*q.gz; do
+        echo "Procesando $file ..."
+        fastqc -o FastQC_Results "$file"
     done
-
-    echo "Ciclo finalizado: resultados en la carpeta cut_fastq"
-
-    # Verificar que los archivos se hayan recortado
-    ls -lh cut_fastq/*.f*q.gz
-
-    # Calcular el tiempo de ejecución
-    end_time=$(date +%s.%N)
-    execution_time=$(echo "$end_time - $start_time" | bc)
-
-    # Convertir segundos a minutos:segundos
-    minutes=$(echo "scale=0; $execution_time / 60" | bc)
-    seconds=$(echo "scale=0; $execution_time % 60" | bc)
-    total_minutes=$(echo "$minutes + ($seconds > 0)" | bc)
-
-    echo "Recorte de los archivos fastq completado. Los resultados se encuentran en la carpeta cut_fastq."
-    echo "Tiempo de ejecución: $minutes minutos $seconds segundos."
     echo
 
-    # Aviso por correo
-    # Cuerpo del correo
-    BODY="El recorte de los archivos fastq.gz se hizo en: ${total_minutes}."
+    # Ejecutar MultiQC para generar el informe global
 
-    # Envío del correo
-    echo "$BODY" | mail -s "Aviso: Recorte de archivos" jhonatanraulm@gmail.com
+    echo "Generando informe global con MultiQC..."
+    multiqc FastQC_Results -o FastQC_Results
+
+    echo "Análisis de calidad completado. Los resultados se encuentran en la carpeta FastQC_Results."
+    echo "Done"
+
+**Las muestras tienen una buena calidad a lo largo de su secuencia, tanto el R1 como el R2. Son lecturas de 101bp. Cada muestra contiene en promedio 44 millones de lecturas, de las cuales el 60% son duplicados y el resto son secuencias únicas. Existe una advertencia en la presencia de adaptadores.** Por el momemento vamos a trabajar así las secueencias. 
+
+4. Alineamiento: STAR 2.7.11b. La instalación de la herramienta fue mediante ¨[Conda](https://anaconda.org/bioconda/star) 
+
+    conda install bioconda::star
+
+El Genoma de referencia y la anotación GTF se obtuvieron de: [Genome assembly GRCh38](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/). Unicamente se descargarón los datos RefSeq. El index de STAR se construyó de la sigueinte manera:
+
+    #!/bin/bash
+
+    ulimit -n 10000
+
+    # Code to generate the index for STAR
+
+    STAR --runThreadN 15 --runMode genomeGenerate --genomeDir Genome/ --genomeFastaFiles \
+    Genome/GCF_000001405.26_GRCh38_genomic.fna --sjdbGTFfile Genome/genomic.gtf \ 
+    --sjdbOverhang 100
+
 
     # Fin del script
     echo "Done"
 
-2. Control de calidad
-
-El control de calidad se realizó con el código base de este [repositorio](https://github.com/Marval96/Bash_script/tree/main/quality_control).
-
-    #!/bin/bash
-
-    #-------------------------------------------------------------------------------------------------------------------------------------------------------->
-    echo
-    echo "Hola, $USER !"
-    echo
-    echo -e "Este script realiza un análisis de calidad de datos obtenidos mediante secuenciación de nueva generación (NGS) de tipo paired-end.\n\
-    Utiliza la herramienta FastQC y MultiQC.\n\
-    Primero realiza el análisis de calidad para cada una de las muestras con FastQC y después con MultiQC genera un resumen global más fácil de interpretar."
-    echo
-    echo -e "Recuerda activar el ambiente Conda llamado 'QualityControl' el cual contiene las herramientas necesarias para el análisis.\n\
-    Para tener el ambiente Conda, sigue los siguientes pasos:\n\
-        1. Descargar el archivo QualityControl.yml, el cual contiene el ambiente Conda.\n\
-        2. Generar el ambiente Conda ejecutando: conda env create -f QualityControl.yml\n\
-        3. Activar el ambiente Conda ejecutando: conda activate QualityControl."
-    echo
-    echo "¿Estás listo para ejecutar el análisis? (si/no)"
-    read respuesta
-    echo
-
-    # Comprobación de la respuesta
-    if [[ "$respuesta" == "si" || "$respuesta" == "SI" || "$respuesta" == "Si" ]]; then
-        # Verificar si el ambiente "QualityControl" está activo y si FastQC y MultiQC están disponibles
-        if conda info --envs | grep -q "QualityControl" && command -v fastqc >/dev/null && command -v multiqc >/dev/null; then
-            echo "¡Perfecto! El ambiente 'QualityControl' está activo y contiene FastQC y MultiQC."
-            
-            # Ejecutar el análisis en segundo plano
-            echo "Comenzando el análisis..."
-            nohup ./analisis.sh &
-            pid=$!  # Obtiene el PID del último proceso ejecutado en segundo plano
-            echo "El análisis ha comenzado en segundo plano. El PID es: $pid" 
-            echo "El registro se guardará en el archivo 'nohup.out'. Puedes monitorearlo ejecutando: tail -f nohup.out"
-        else
-            echo "Error: El ambiente 'QualityControl' no está activo o no contiene FastQC y/o MultiQC."
-            echo "Por favor, asegúrate de que el ambiente esté activo y que las herramientas estén instaladas."
-            exit 1
-        fi
-    elif [[ "$respuesta" == "no" || "$respuesta" == "NO" || "$respuesta" == "No" ]]; then
-        echo "Gracias, vuelva pronto, mil besos."
-        exit 0  # Termina el script si la respuesta es no
-    else
-        echo "Respuesta no válida. Por favor, responde con 'si' o 'no'."
-        exit 1  # Termina el script si la respuesta no es válida
-    fi
-    echo
-
-
-3. Alineamiento: STAR 2.7.11b. La instalación de la herramienta fue mediante ¨[Conda](https://anaconda.org/bioconda/star) 
-
-    conda install bioconda::star
-
-El Genoma de referencia y la anotación GTF se obtuvieron de: [Genome assembly GRCh38](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001405.26/). 
-
-
-
-4. Ensamblaje
-5. PCA
-6. Expresión diferencial.
+5. Ensamblaje
+6. PCA
+7. Expresión diferencial.
 
 ---
 
