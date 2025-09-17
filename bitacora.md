@@ -42,7 +42,7 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 
 Transferencia de archivos:
 
-Desde tu laptop a la computadora del laboratorio:
+Desde laptop a la computadora del laboratorio:
 
     scp archivo.txt usuario_lab@IP_lab:/home/usuario_lab/
 
@@ -426,6 +426,102 @@ El Genoma de referencia y la anotación GTF se obtuvieron de: [Genome assembly G
 
     # Fin del script
     echo "Done"
+
+El siguiente paso es alienar las lectureas contra el genoma de refenrecia. Para esto STAR, usa como base el INDEX genrado previamente. El alineamiento se hizo con el siguiente código:
+
+    #!/bin/bash
+
+    # Script to do RNAseq alignment using STAR
+
+    # ----------------------
+
+    # STAR files permission issue fix
+    ulimit -n 10000
+
+    # Alignment process
+
+    # Output directory 
+    OUTDIR="star_out"
+
+    # Loop for all fastq files
+    for R1 in *_1.fastq
+    do
+        # basename (remove _1.fastq)
+        BASE=$(basename $R1 _1.fastq)
+        R2=${BASE}_2.fastq
+        mkdir -p ${OUTDIR}/${BASE}
+
+        echo "Process sample: $BASE"
+
+        STAR \
+            --genomeDir /home/jrmarval/rnaseq_fadu/Genome \
+            --genomeLoad LoadAndRemove \
+            --limitBAMsortRAM 20000000000 \
+            --sjdbOverhang 100 \
+            --readFilesIn $R1 $R2 \
+            --runThreadN 10 \
+            --outFileNamePrefix ${OUTDIR}/${BASE}_ \
+            --outSAMtype BAM Unsorted SortedByCoordinate \
+            --quantMode TranscriptomeSAM GeneCounts
+
+    done
+
+    echo "Alignment done"
+
+Posteriorme, las cuentas de los transcritos cuantificadas por STAR se unifican en una solo matriz:
+
+    #!/bin/bash
+
+    # Script to do a count matrix from STAR to DESeq2
+    # Output file
+
+    OUTFILE="matrix_counts_DESeq2.txt"
+    STRAND_COL=2   # 2 = unstranded, 3 = forward, 4 = reverse
+
+    FILES=$(ls *_ReadsPerGene.out.tab | sort)
+
+    FIRST=1
+
+    for file in $FILES; do
+        BASE=$(basename "$file" _ReadsPerGene.out.tab)
+
+        if [[ $FIRST -eq 1 ]]; then
+            # Primera muestra: gene + counts
+            awk -v col=$STRAND_COL '$1 !~ /^N_/ {print $1 "\t" $col}' $file > $OUTFILE
+            FIRST=0
+        else
+            # Solo counts de las demás muestras
+            awk -v col=$STRAND_COL '$1 !~ /^N_/ {print $col}' $file > temp_counts.txt
+            paste $OUTFILE temp_counts.txt > temp_matrix.txt
+            mv temp_matrix.txt $OUTFILE
+            rm temp_counts.txt
+        fi
+    done
+
+    # Add header
+    HEADER="Gene"
+    for file in $FILES; do
+        BASE=$(basename "$file" _ReadsPerGene.out.tab)
+        HEADER="$HEADER\t$BASE"
+    done
+    sed -i "1i$HEADER" $OUTFILE
+
+    echo "Matrix for DESeq2 generated: $OUTFILE"
+    echo "Counts matrix done"
+
+La matriz de conteos crudos representa la entrada para DESeq2 y la expresión diferencial:
+
+| Gene         | SRR11319298 | SRR11319299 | SRR11319300 | SRR11319307 | SRR11319308 | SRR11319309 |
+|--------------|-------------|-------------|-------------|-------------|-------------|-------------|
+| DDX11L1      | 3           | 0           | 3           | 2           | 1           | 4           |
+| WASH7P       | 47          | 54          | 67          | 58          | 61          | 36          |
+| MIR6859-1    | 3           | 3           | 4           | 6           | 5           | 2           |
+| MIR1302-2    | 0           | 0           | 0           | 0           | 0           | 0           |
+| FAM138A      | 0           | 0           | 0           | 0           | 0           | 0           |
+| OR4F5        | 0           | 0           | 0           | 0           | 0           | 0           |
+| LOC101927589 | 1           | 0           | 1           | 1           | 1           | 1           |
+| LOC729737    | 85          | 94          | 104         | 107         | 89          | 86          |
+| LOC100996442 | 4           | 2           | 1           | 3           | 3           | 3           |
 
 5. Ensamblaje
 6. PCA
