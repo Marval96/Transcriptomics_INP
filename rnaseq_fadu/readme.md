@@ -16,7 +16,7 @@ Información y material relacionado con el análisis transcriptómico de la lín
     + El análisis de enriquecimiento de vías: pea_fadu_up_wt_vs_irrko.csv
     + El código empleado para el análsiis de inersección: intersection_wt_vs_irrko.ipynb
 
-+ IrrKO vs WT (datos en crudo):
++ IrrKO vs WT (*raw data*):
     + El reporte del análisis de expresión diferencial: reporte_rnaseq_fadu_wt_vs_irrko.pdf
     + El listado de genes diferencialmente expresados: dea_fadu_wt_vs_irrko_raw_data.csv
     + Listado completo de genes del análisis de expresión diferencial: GSE147085_wt_vs_irrko_raw_data.csv
