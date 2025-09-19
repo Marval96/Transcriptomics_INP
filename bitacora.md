@@ -78,7 +78,7 @@ Por hacer:
 
 > Septimebre 5, 2025
 
-**Métodos del artúiclo base para el análasis**
+**Métodos del artículo base para el análisis**
 
 ---
 
@@ -523,9 +523,27 @@ La matriz de conteos crudos representa la entrada para DESeq2 y la expresión di
 | LOC729737    | 85          | 94          | 104         | 107         | 89          | 86          |
 | LOC100996442 | 4           | 2           | 1           | 3           | 3           | 3           |
 
-5. Ensamblaje
-6. PCA
-7. Expresión diferencial.
+
+5. PCA: el ensabamblaje del transcriptoma no muestra efectos biológicos o técnicos, hay una clara separación entre las muestras control y las experimentales.
+
+El análisis diferencial identificó 103 genes diferencialmente expresados, de los cuales 68 subexpresados y 35 sobreexpresados. El análisis de enriquecimiento funcional de los genes sobreexpresados reveló asociación con procesos de estructura y remodelación de la matriz extracelular, señalización mediada por citocinas y formación de la envoltura córnea.
+
+Posteriormente, se realizó un análisis de intersección entre tres conjuntos de datos: genes asociados a neo-loops, genes identificados por RNA-seq y genes correspondientes al listado de anticuerpos disponibles del grupo. Los resultados se resumen a continuación:
+
++ Neo-loops vs RNA-seq: dos genes compartidos, SPRR1A y SPRR1B.
+
++ Neo-loops vs Anticuerpos: un único gen compartido, COL1A1.
+
++ RNA-seq vs Anticuerpos: tres genes comunes, MMP1 y MMP13.
+
++ Intersección entre los tres conjuntos: No se identificaron genes compartidos
+
+**Interpretación:** ambas comparativas de la línea FaDu, presentan una escasa intersección entre los conjuntos evaluados, lo que sugiere una superposición limitada de genes entre las diferentes fuentes de datos. **Trabajar los datos en crudo no representó ninguna mejora en el análisis.**
+
+Toda la información de estos análisis se encuentra [aquí](https://github.com/Marval96/Transcriptomics_INP/tree/main/rnaseq_fadu).
+
+Entre ambas tecnologías hay un traslape casi nulo, se comparten muy pocos genes y no hay coincidencia alguna con el listado de anticuerpos disponibles en el grupo.
+ 
 
 ---
 
