@@ -523,6 +523,7 @@ La matriz de conteos crudos representa la entrada para DESeq2 y la expresión di
 | LOC729737    | 85          | 94          | 104         | 107         | 89          | 86          |
 | LOC100996442 | 4           | 2           | 1           | 3           | 3           | 3           |
 
+> Sepimebre 19, 2025
 
 5. PCA: el ensabamblaje del transcriptoma no muestra efectos biológicos o técnicos, hay una clara separación entre las muestras control y las experimentales.
 
@@ -544,8 +545,68 @@ Toda la información de estos análisis se encuentra [aquí](https://github.com/
 
 Entre ambas tecnologías hay un traslape casi nulo, se comparten muy pocos genes y no hay coincidencia alguna con el listado de anticuerpos disponibles en el grupo.
  
+> **Nota:** es indispensable encontrar una línea celular que se parezca más al modelo experimental del grupo. Se tiene una línea WT (FadU), y la variante isogénica con un KO de FANCA. 
+Necesitamos que la condición experimental sea FANCONI para atribuirle las alteraciones biológicas observadas como la remodelación de la matriz extracelular asociada con tumores "fríos". 
+
+> Septiembre 24, 2025.
+
+El artículo [Genomic signature of Fanconi anaemia DNA repair pathway deficiency in cancer](https://www.nature.com/articles/s41586-022-05253-4#Sec8), contiene 6 muestras de pacientes FA con SCC. Tomaré estas muestras para compararlas contra los archivos de la línea FadU usándolas como condición control. Los datos se encuentran disponibles en el [SRA](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=phs002652&o=assay_type_s%3Aa%3Bacc_s%3Aa).
+
+| Run         | BioSample    | Assay Type | Bases    | biospecimen_repository_sample_id          | body_site        | Bytes    | Experiment   | histological_type       | Instrument    | is_tumor | LibraryLayout | LibrarySelection | LibrarySource  | Platform  | Sample Name                                | sex   |
+|------------|-------------|------------|---------|-------------------------------------------|-----------------|---------|-------------|------------------------|---------------|----------|---------------|----------------|---------------|----------|-------------------------------------------|-------|
+| SRR21838670 | SAMN30934659 | RNA-Seq    | 13.13 G | F29P1_N_T_FRZN_PyS_P_RNA_ILL            | Pyriform sinus  | 5.29 Gb | SRX17827614 | Right pyriform sinus    | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F29P1_N_T_FRZN_PyS_P_RNA_ILL             | male  |
+| SRR21838684 | SAMN30934708 | RNA-Seq    | 19.29 G | F38P1_Y_T_FRZN_Lip_P1_RNA_ILL           | Lip             | 7.77 Gb | SRX17827623 | Lower lip              | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F38P1_Y_T_FRZN_Lip_P1_RNA_ILL            | male  |
+| SRR21838720 | SAMN30934641 | RNA-Seq    | 13.87 G | F14P1_Y_T_FRZN_Pyx_P_RNA_ILL            | Pharynx         | 5.58 Gb | SRX17827704 | Right hypopharynx      | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F14P1_Y_T_FRZN_Pyx_P_RNA_ILL             | male  |
+| SRR21838725 | SAMN30934690 | RNA-Seq    | 12.31 G | F37P1_NA_T_TCL_Ora_RNA_ILL               | Oral            | 4.97 Gb | SRX17827709 | Not applicable         | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F37P1_NA_T_TCL_Ora_RNA_ILL               | female|
+| SRR21838739 | SAMN30934731 | RNA-Seq    | 360.56 G| F17P1_NA_T_TCL_Pyx_P_RNA_ILL             | Pharynx         | 204.14 Gb| SRX17827647 | Not applicable         | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F17P1_NA_T_TCL_Pyx_P_RNA_ILL             | male  |
+| SRR21838759 | SAMN30934611 | RNA-Seq    | 10.95 G | F36P1_NA_T_TCL_Ton_P_RNA_ILL             | Tongue          | 4.52 Gb | SRX17827666 | Not applicable         | NextSeq 500   | Yes      | PAIRED        | PolyA          | TRANSCRIPTOMIC | ILLUMINA | F36P1_NA_T_TCL_Ton_P_RNA_ILL             | male  |
+
+Primero es necesario activar el paquete SRA tool-kit:
 
 ---
+    export PATH=$PWD/sratoolkit.3.2.1-ubuntu64/bin:$PATH
+---
+     which fastq-dump
+---
+    > /home/jrmarval/rnaseq_fadu/sratoolkit.3.2.1-ubuntu64/bin/fastq-dump
+---
+    fastq-dump --version
+---
+    > fastq-dump : 3.2.1
+
+---
+
+Los datos se descargaron de la siguiente forma: 
+
+    !/bin/bash
+
+    # Temporizador: inicio
+    START=$(date +%s)
+
+    # Automatizacion de la descarga de los datos de SRA
+
+    # Descarga manual
+    prefetch SAMN30934659 --progress
+    prefetch SAMN30934708 --progress
+    prefetch SAMN30934641 --progress
+    prefetch SAMN30934690 --progress
+    prefetch SAMN30934731 --progress
+    prefetch SAMN30934611 --progress
+
+    # Temporizador: fin
+    END=$(date +%s)
+    ELAPSED=$((END-START))
+    echo "Tiempo total de ejecución: $ELAPSED segundos"
+
+    # Aviso por correo 
+    # Cuerpo del correo
+    BODY="La descarga de datos SRA se hizo en: ${MIN}m ${SEC}s (${ELAPSED} segundos)."
+
+    # Envío del correo
+    echo "$BODY" | mail -s "Aviso: Test SHH" jhonatanraulm@gmail.com
+
+    # Fin del script
+    echo "Done"
 
 ### **Pendientes:**
 
