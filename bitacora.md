@@ -68,10 +68,26 @@ Comando para matar procesos y procesos derivados:
 
 Lectura y análisis del artículo [Spatial transcriptomics identifies molecular niche dysregulation associated with distal lung remodeling in pulmonary fibrosis](https://www.nature.com/articles/s41588-025-02080-x), para el trabajo de Miguel. 
 
+Por hacer: 
+
++ Los datos estan libres? 
++ Qué plataforma se utiliza? XENIUM
++ Construir un set de datos de prueba, útiles para testear en flujo de trabajo.
++ Cómo funciona Xenium? Consideraciones de la segmentación? Complejidad del clustering. 
++ Qué es un TMA?
+
+
+> Septiembre 29, 2025.
+
+**¿Cómo innicio a montar un flujo de trabajo para datos Xenium?**
+
 Recursos educativos de Xenium:
 
 + Xenium Onboard Analysis: https://www.10xgenomics.com/support/software/xenium-onboard-analysis/latest
++ Overview of Xenium Algorithms: https://www.10xgenomics.com/support/software/xenium-onboard-analysis/latest/algorithms-overview/xoa-algorithms
++ Xenium Explorer: https://www.10xgenomics.com/support/software/xenium-explorer/latest
 + Explore Human Breast Tumors: https://www.10xgenomics.com/products/xenium-in-situ/human-breast-dataset-explorer
++ R or Python: https://www.10xgenomics.com/analysis-guides/choosing-r-or-python-xenium-analysis-blog
 
 **Tecnologías de transcriptómica espacial**
 
@@ -100,18 +116,28 @@ Recursos educativos de Xenium:
 | **Fresh frozen tissue**| Congelación inmediata (–80 °C o nitrógeno)   | Alta calidad de RNA, preserva proteínas y metabolitos | Requiere cadena de frío, menos práctico          | Transcriptómica, proteómica, metabolómica |
 | **Tissue microarray (TMA)** | Cilindros de tejido múltiples re-ensamblados en un bloque | Procesa muchas muestras a la vez, eficiente        | Representa solo una parte → riesgo de sesgo      | Estudios de validación en cohortes grandes |
 
+---
 
-Por hacer: 
+**Diferencias entre las tecnologías de 10x en transcriptómica espacial:**
 
-+ Los datos estan libres? 
-+ Qué plataforma se utiliza? XENIUM
-+ Construir un set de datos de pruEba, útiles para testear en flujo de traBajo.
-+ Cómo funciona Xenium? Consideraciones de la segmentación? Complejidad del clustering. 
-+ Qué es un TMA?
+| Category              | Chromium Single Cell platform                             | Xenium Spatial platform                                                                                          | Visium Spatial platform              |
+|-----------------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **When to use**       | Comprehensive single cell data<br>Ideal for deep characterization of cell populations and states. | High-resolution discovery<br>Understand complex tissues, neighborhoods, and cell-to-cell interactions. Integration with other spatial-omics, histology, and morphology. | Expanded spatial discovery            |
+| **Why use**           | Unbiased single cell discovery<br>High per-gene sensitivity                                    | Single cell spatial discovery<br>High per-gene sensitivity                                                       | Expanded spatial discovery            |
+| **Applications**      | Whole transcriptome gene expression<br>Protein<br>TCR, BCR<br>CRISPR<br>ATAC                  | Targeted gene expression (up to 5,000 genes)<br>Multiomic gene and protein expression (up to 480 genes and 27 proteins) | Whole transcriptome gene expression   |
+| **Resolution**        | Single cell                                                                                    | Subcellular                                                                                                      | Single cell–scale                     |
+| **Data readout**      | NGS-based                                                                                      | Imaging-based                                                                                                    | NGS-based                             |
+| **Sample compatibility** | Single cell or nuclei suspensions from fresh, frozen, or FFPE samples                        | Fresh frozen<br>FFPE                                                                                             | FFPE<br>Fresh frozen<br>Fixed frozen  |
 
-> Septimebre 5, 2025
+---
 
-**Métodos del artículo base para el análisis**
+**Tipos de muestras compatibles para ST:**
+
+| Tipo de muestra | Descripción                                                                 | Ventajas                                                                                         | Desventajas                                                                 | Idoneidad en transcriptómica |
+|-----------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|-------------------------------|
+| **FFPE** (Formalin-Fixed Paraffin-Embedded) | Tejido fijado en formalina e incrustado en parafina. Conservación a largo plazo. | - Excelente preservación morfológica<br>- Amplia disponibilidad en biobancos<br>- Compatible con IHC y algunas técnicas moleculares | - Fragmentación y degradación del ARN<br>- Artefactos por fijación<br>- Sensibilidad reducida en NGS | **Limitada** (ARN degradado, solo paneles dirigidos o 3’ RNA-seq adaptados) |
+| **FFT** (Fresh Frozen Tissue) | Tejido congelado inmediatamente tras la resección quirúrgica. | - Conserva ácidos nucleicos y proteínas en estado casi nativo<br>- Ideal para transcriptómica, proteómica y metabolómica | - Requiere cadena de frío (−80°C)<br>- Costoso almacenamiento<br>- Morfología menos preservada que FFPE | **Óptima** (mejor calidad e integridad del ARN, ideal para RNA-seq de alta resolución) |
+| **TMA** (Tissue Microarray) | Técnica que agrupa múltiples cilindros de tejido en un solo bloque. | - Permite análisis de alto rendimiento<br>- Eficiente en consumo de reactivos<br>- Comparabilidad entre muestras | - Muestra limitada por cilindro<br>- Riesgo de no representar la heterogeneidad tumoral<br>- Depende de calidad del bloque original | **Muy limitada** (no apta para transcriptómica completa; solo aplicable si proviene de FFPE o FFT) |
 
 ---
 
@@ -173,30 +199,6 @@ Se hizo una análisis de expresión diferencial, con la plataforma GEO2R. El obj
 + El punto de corte de log2fc debe ser 1.5
 + Compartir resultados con Ulises y datos HI-C.
 + Explorar el enriquecimiento con ShinyGO.
-
-> Septiembre 29, 2025
-
-**Diferencias entre las tecnologías de 10x en transcriptómica espacial:**
-
-| Category              | Chromium Single Cell platform                             | Xenium Spatial platform                                                                                          | Visium Spatial platform              |
-|-----------------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| **When to use**       | Comprehensive single cell data<br>Ideal for deep characterization of cell populations and states. | High-resolution discovery<br>Understand complex tissues, neighborhoods, and cell-to-cell interactions. Integration with other spatial-omics, histology, and morphology. | Expanded spatial discovery            |
-| **Why use**           | Unbiased single cell discovery<br>High per-gene sensitivity                                    | Single cell spatial discovery<br>High per-gene sensitivity                                                       | Expanded spatial discovery            |
-| **Applications**      | Whole transcriptome gene expression<br>Protein<br>TCR, BCR<br>CRISPR<br>ATAC                  | Targeted gene expression (up to 5,000 genes)<br>Multiomic gene and protein expression (up to 480 genes and 27 proteins) | Whole transcriptome gene expression   |
-| **Resolution**        | Single cell                                                                                    | Subcellular                                                                                                      | Single cell–scale                     |
-| **Data readout**      | NGS-based                                                                                      | Imaging-based                                                                                                    | NGS-based                             |
-| **Sample compatibility** | Single cell or nuclei suspensions from fresh, frozen, or FFPE samples                        | Fresh frozen<br>FFPE                                                                                             | FFPE<br>Fresh frozen<br>Fixed frozen  |
-
-**Tipos de muestras compatibles para ST:**
-
-| Tipo de muestra | Descripción                                                                 | Ventajas                                                                                         | Desventajas                                                                 | Idoneidad en transcriptómica |
-|-----------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|-------------------------------|
-| **FFPE** (Formalin-Fixed Paraffin-Embedded) | Tejido fijado en formalina e incrustado en parafina. Conservación a largo plazo. | - Excelente preservación morfológica<br>- Amplia disponibilidad en biobancos<br>- Compatible con IHC y algunas técnicas moleculares | - Fragmentación y degradación del ARN<br>- Artefactos por fijación<br>- Sensibilidad reducida en NGS | **Limitada** (ARN degradado, solo paneles dirigidos o 3’ RNA-seq adaptados) |
-| **FFT** (Fresh Frozen Tissue) | Tejido congelado inmediatamente tras la resección quirúrgica. | - Conserva ácidos nucleicos y proteínas en estado casi nativo<br>- Ideal para transcriptómica, proteómica y metabolómica | - Requiere cadena de frío (−80°C)<br>- Costoso almacenamiento<br>- Morfología menos preservada que FFPE | **Óptima** (mejor calidad e integridad del ARN, ideal para RNA-seq de alta resolución) |
-| **TMA** (Tissue Microarray) | Técnica que agrupa múltiples cilindros de tejido en un solo bloque. | - Permite análisis de alto rendimiento<br>- Eficiente en consumo de reactivos<br>- Comparabilidad entre muestras | - Muestra limitada por cilindro<br>- Riesgo de no representar la heterogeneidad tumoral<br>- Depende de calidad del bloque original | **Muy limitada** (no apta para transcriptómica completa; solo aplicable si proviene de FFPE o FFT) |
-
-
-
 
 **Análisis transcriptómico FaDU**
 
@@ -682,10 +684,20 @@ Con estos resultados no se observaron procesos asociados a la remodelación de m
 ### **Pendientes:**
 
 + Proporciones celulares !
-+ Ensamblaje transcriptómico de líneas celulares
-+ Parámetros experimentales RNAseq Bulk
-+ Cuál es el flujo de trabajo del NCBI en datos RNAseq bulk?
++ Revisar los siguientes artículos sobre transcriptómica espacial:
 
+    + Optimizing Xenium In Situ data utility by quality assessment and best-practice analysis workflows
+    + High resolution mapping of the tumor microenvironment using integrated single-cell, spatial and in situ analysis
+    + Spatial transcriptomics: Technologies, applications and experimental considerations
+    + A practical guide for choosing an optimal spatial transcriptomics technology from seven major commercially available options
+    + Scoping Review: Methods and Applications of Spatial Transcriptomics in Tumor Research
+    + Spatial Omics in Clinical Research: A Comprehensive Review of Technologies and Guidelines for Applications
+    + A guidebook of spatial transcriptomic technologies, data resources and analysis approaches
+    + Research Techniques Made Simple: Spatial Transcriptomics
+    + Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization
+    + Applications for single-cell and spatial transcriptomics in plant research
+    + An introduction to spatial transcriptomics for biomedical research
+    
 ---
 
 ### **Literatura:**
