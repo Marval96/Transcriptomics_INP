@@ -68,12 +68,45 @@ Comando para matar procesos y procesos derivados:
 
 Lectura y análisis del artículo [Spatial transcriptomics identifies molecular niche dysregulation associated with distal lung remodeling in pulmonary fibrosis](https://www.nature.com/articles/s41588-025-02080-x), para el trabajo de Miguel. 
 
+Recursos educativos de Xenium:
+
++ Xenium Onboard Analysis: https://www.10xgenomics.com/support/software/xenium-onboard-analysis/latest
++ Explore Human Breast Tumors: https://www.10xgenomics.com/products/xenium-in-situ/human-breast-dataset-explorer
+
+**Tecnologías de transcriptómica espacial**
+
+| Plataforma          | Fundamento / Método                          | Resolución        | Cobertura / Modalidades                    | Ventajas                                                                | Desventajas / Limitaciones            | Compatibilidad de muestras        |
+|---------------------|-----------------------------------------------|-------------------|--------------------------------------------|-------------------------------------------------------------------------|----------------------------------------|-----------------------------------|
+| **Chromium (10x)**  | Microgotas para captura de células/núcleos individuales (scRNA-seq, multiome) | Single cell       | Transcriptoma completo, TCR/BCR, ATAC, CRISPR | Descubrimiento global no sesgado, alta sensibilidad, multi-ómicas       | Sin información espacial (no contexto tisular) | Suspensiones celulares o núcleos (fresh, frozen, FFPE) |
+| **Visium (10x)**    | Captura de RNA sobre spots (~55 µm)          | 1–10 células/spot | Transcriptoma completo, proteínas (Visium CytAssist) | Descubrimiento global con contexto espacial, integración con histología | Resolución multicelular, spots grandes | Fresh frozen, FFPE, fixed frozen |
+| **Xenium (10x)**    | Hibridación in situ + imagen                 | Subcelular        | Panel dirigido (100s–1000s genes)          | Alta sensibilidad, precisión subcelular, integración con scRNA-seq/Visium | Limitado a panel, costo alto           | FFPE, fresh frozen               |
+
+---
+
+| Plataforma          | When to use (Cuándo usar)                                | Why use (Por qué usar)                                | Applications (Aplicaciones)                                   | Resolution (Resolución) | Data readout (Lectura de datos) | Sample compatibility (Muestras) |
+|---------------------|----------------------------------------------------------|--------------------------------------------------------|---------------------------------------------------------------|--------------------------|----------------------------------|----------------------------------|
+| **Chromium (Single Cell)** | Comprehensive single cell data. Ideal para caracterizar poblaciones y estados celulares en profundidad. | Unbiased single cell discovery. High per-gene sensitivity. | Whole transcriptome gene expression, Protein, TCR, BCR, CRISPR, ATAC | Single cell             | NGS-based                        | Suspensiones de células o núcleos (fresh, frozen, FFPE) |
+| **Xenium (Spatial)** | Single cell spatial discovery. Validación y estudio dirigido con resolución subcelular. | High per-gene sensitivity. Precisión espacial subcelular. | Targeted gene expression (hasta ~5,000 genes). Multiomic gene + protein expression (480 genes + 27 proteínas) | Subcellular             | Imaging-based                    | FFPE, fresh frozen |
+| **Visium (Spatial)** | Expanded spatial discovery. Entender tejidos complejos, vecindarios y comunicación célula a célula. | Whole transcriptome discovery. Integración con histología y multi-ómicas. | Whole transcriptome gene expression. Spatial protein expression. | Single cell–scale (spots ~55 µm → 1–10 células) | NGS-based                        | FFPE, fresh frozen, fixed frozen |
+
+
+---
+
+**Tipos de muestras de tejido**
+
+| Tipo de muestra        | Método de preparación                      | Ventajas                                           | Desventajas / Limitaciones                       | Usos comunes                           |
+|------------------------|--------------------------------------------|----------------------------------------------------|-------------------------------------------------|----------------------------------------|
+| **FFPE tissue**        | Fijación en formalina + inclusión en parafina | Conservación a largo plazo, estándar clínico       | RNA fragmentado, menor sensibilidad              | Patología, biobancos, validación        |
+| **Fresh frozen tissue**| Congelación inmediata (–80 °C o nitrógeno)   | Alta calidad de RNA, preserva proteínas y metabolitos | Requiere cadena de frío, menos práctico          | Transcriptómica, proteómica, metabolómica |
+| **Tissue microarray (TMA)** | Cilindros de tejido múltiples re-ensamblados en un bloque | Procesa muchas muestras a la vez, eficiente        | Representa solo una parte → riesgo de sesgo      | Estudios de validación en cohortes grandes |
+
+
 Por hacer: 
 
 + Los datos estan libres? 
 + Qué plataforma se utiliza? XENIUM
-+ Construir un set de datos de pruba, útiles para testear en flujo de trbaajo.
-+ Cómo funciona Xenium? Cosnideraciones de la segmentación? Complejidad del clustering. 
++ Construir un set de datos de pruEba, útiles para testear en flujo de traBajo.
++ Cómo funciona Xenium? Consideraciones de la segmentación? Complejidad del clustering. 
 + Qué es un TMA?
 
 > Septimebre 5, 2025
@@ -141,7 +174,29 @@ Se hizo una análisis de expresión diferencial, con la plataforma GEO2R. El obj
 + Compartir resultados con Ulises y datos HI-C.
 + Explorar el enriquecimiento con ShinyGO.
 
-> Septiembre 4, 2025
+> Septiembre 29, 2025
+
+**Diferencias entre las tecnologías de 10x en transcriptómica espacial:**
+
+| Category              | Chromium Single Cell platform                             | Xenium Spatial platform                                                                                          | Visium Spatial platform              |
+|-----------------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **When to use**       | Comprehensive single cell data<br>Ideal for deep characterization of cell populations and states. | High-resolution discovery<br>Understand complex tissues, neighborhoods, and cell-to-cell interactions. Integration with other spatial-omics, histology, and morphology. | Expanded spatial discovery            |
+| **Why use**           | Unbiased single cell discovery<br>High per-gene sensitivity                                    | Single cell spatial discovery<br>High per-gene sensitivity                                                       | Expanded spatial discovery            |
+| **Applications**      | Whole transcriptome gene expression<br>Protein<br>TCR, BCR<br>CRISPR<br>ATAC                  | Targeted gene expression (up to 5,000 genes)<br>Multiomic gene and protein expression (up to 480 genes and 27 proteins) | Whole transcriptome gene expression   |
+| **Resolution**        | Single cell                                                                                    | Subcellular                                                                                                      | Single cell–scale                     |
+| **Data readout**      | NGS-based                                                                                      | Imaging-based                                                                                                    | NGS-based                             |
+| **Sample compatibility** | Single cell or nuclei suspensions from fresh, frozen, or FFPE samples                        | Fresh frozen<br>FFPE                                                                                             | FFPE<br>Fresh frozen<br>Fixed frozen  |
+
+**Tipos de muestras compatibles para ST:**
+
+| Tipo de muestra | Descripción                                                                 | Ventajas                                                                                         | Desventajas                                                                 | Idoneidad en transcriptómica |
+|-----------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|-------------------------------|
+| **FFPE** (Formalin-Fixed Paraffin-Embedded) | Tejido fijado en formalina e incrustado en parafina. Conservación a largo plazo. | - Excelente preservación morfológica<br>- Amplia disponibilidad en biobancos<br>- Compatible con IHC y algunas técnicas moleculares | - Fragmentación y degradación del ARN<br>- Artefactos por fijación<br>- Sensibilidad reducida en NGS | **Limitada** (ARN degradado, solo paneles dirigidos o 3’ RNA-seq adaptados) |
+| **FFT** (Fresh Frozen Tissue) | Tejido congelado inmediatamente tras la resección quirúrgica. | - Conserva ácidos nucleicos y proteínas en estado casi nativo<br>- Ideal para transcriptómica, proteómica y metabolómica | - Requiere cadena de frío (−80°C)<br>- Costoso almacenamiento<br>- Morfología menos preservada que FFPE | **Óptima** (mejor calidad e integridad del ARN, ideal para RNA-seq de alta resolución) |
+| **TMA** (Tissue Microarray) | Técnica que agrupa múltiples cilindros de tejido en un solo bloque. | - Permite análisis de alto rendimiento<br>- Eficiente en consumo de reactivos<br>- Comparabilidad entre muestras | - Muestra limitada por cilindro<br>- Riesgo de no representar la heterogeneidad tumoral<br>- Depende de calidad del bloque original | **Muy limitada** (no apta para transcriptómica completa; solo aplicable si proviene de FFPE o FFT) |
+
+
+
 
 **Análisis transcriptómico FaDU**
 
@@ -607,6 +662,22 @@ Los datos se descargaron de la siguiente forma:
 
     # Fin del script
     echo "Done"
+
+Los datos deben solicitarse mediante un PI. 
+
+> Septiembre 26, 2025
+
+Les comparto que encontré un set de datos que podrían sernos útiles. El trabajo de la Dra. Agata “Genomic signature of Fanconi anaemia DNA repair pathway deficiency in cancer” incluye 6 muestras de RNA-seq bulk de pacientes FA-SCC de distintas regiones anatómicas. Además, contiene 3 muestras de scRNA-seq y una de transcriptómica espacial (Visium). Lamentablemente, los datos no están disponibles públicamente, pero es posible solicitarlos a través de la siguiente página: https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002652.v1.p1
+
+En este artículo se presenta un análisis de expresión diferencial entre las 6 muestras bulk y el conjunto de tumores HNSCC depositados en TCGA. A partir de los genes diferencialmente expresados en los tumores FA, realicé un análisis de enriquecimiento de vías con Reactome como referencia. Los resultados muestran una fuerte representación de rutas nucleares relacionadas con la expresión génica, la regulación epigenética y transcripcional, junto con el control del ciclo celular y mecanismos de reparación de ADN (adjunto la figura). Sin embargo, el análisis de intersección entre los neo-loops, los datos transcriptómicos y el listado de anticuerpos no mostró un traslape importante:
+
++ Neo-loops vs RNA-seq: tres genes compartidos (COL12A1, TLL1, COL14A1).
++ Neo-loops vs Anticuerpos: un único gen compartido (COL1A1).
++ RNA-seq vs Anticuerpos: un único gen compartido (ITGB3).
+
+Intersección entre los tres conjuntos: no se identificaron genes comunes.
+Con estos resultados no se observaron procesos asociados a la remodelación de matriz extracelular, como los descritos en los datos de Ceci. Considero que analizar directamente los datos crudos de los pacientes FA frente a la línea celular FaDu (de la cual ya contamos con transcriptoma en análisis previos) podría ofrecer un contraste más claro y cercano al diseño experimental del grupo. Finalmente, tener acceso a los datos espaciales y de célula única nos abriría la posibilidad de plantear nuevas preguntas y de apoyar de manera más amplia el panel que Pablo está diseñando.
+
 
 ### **Pendientes:**
 
