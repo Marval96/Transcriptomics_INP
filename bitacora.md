@@ -141,6 +141,68 @@ Recursos educativos de Xenium:
 
 ---
 
+Estas con algunas consideraciones importantes para el pre-procesamiento de los datos Xenium:
+
++ Normalización por tamaño de biblioteca (library size).
++ Log-transformación (opcional si se mantiene scaling).
++ Scaling (esencial).
++ PCA con todos los componentes.
++ Grafo kNN (16 vecinos).
++ Clustering Louvain o Leiden.
++ HVF selection: Opcional, porque el panel ya es pequeño y dirigido. Su omisión no rompe el clustering si scaling y normalización se mantienen.
+
+**Parámetros críticos: Normalización, scaling, número de PCs, vecinos en kNN.**
+**Fllujo de trabajo:**
+
+                  ┌─────────────────────────────┐
+                  │  Datos Xenium: Imagen +     │
+                  │  Reads (FFPE o Fresh Frozen)│
+                  └─────────────┬──────────────┘
+                                │
+                                ▼
+                  ┌─────────────────────────────┐
+                  │  Segmentación de células    │
+                  │  1. Detectar núcleos → Cellpose
+                  │  2. Asignar reads → Baysor │
+                  │  (Sin expansión necesaria) │
+                  └─────────────┬──────────────┘
+                                │
+                 ┌──────────────▼───────────────┐
+                 │ Matriz célula × gen          │
+                 │ (similar a scRNA-seq)        │
+                 └──────────────┬───────────────┘
+                                │
+                 ┌──────────────▼───────────────┐
+                 │ Identificación de tipos      │
+                 │ celulares:                   │
+                 │ - Filtrado de células        │
+                 │ - Log-transformación         │
+                 │ - Normalización              │
+                 │ - PCA / Reducción de dim.    │
+                 │ - Clustering (Louvain)       │
+                 └──────────────┬───────────────┘
+                                │
+                 ┌──────────────▼───────────────┐
+                 │ Detección de genes espaciales│
+                 │ (SVFs) usando Squidpy,       │
+                 │ SpatialDE, Hotspot, etc.     │
+                 └──────────────┬───────────────┘
+                                │
+                 ┌──────────────▼───────────────┐
+                 │ Imputación de genes (opcional)│
+                 │ Usar scRNA-seq de referencia │
+                 │ Algoritmos: SpaGE, Tangram,  │
+                 │ Seurat                       │
+                 └──────────────┬───────────────┘
+                                │
+                 ┌──────────────▼───────────────┐
+                 │ Identificación de dominios   │
+                 │ tisulares:                   │
+                 │ - Métodos simples: binning   │
+                 │ - Métodos avanzados: Banksy, │
+                 │   SPACEL                     │
+                 └───────────────────────────  ─┘
+
 ### RNAseq: FaDu
 
 > Septiembre 1, 2025
@@ -697,7 +759,7 @@ Con estos resultados no se observaron procesos asociados a la remodelación de m
     + Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization
     + Applications for single-cell and spatial transcriptomics in plant research
     + An introduction to spatial transcriptomics for biomedical research
-    
+
 ---
 
 ### **Literatura:**
