@@ -16,8 +16,10 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 - [Recursos computacionales](#recursos-computacionales-bmf-lab)
 - [ST: Lung](#spatial-transcriptomics-lung)
 - [RNAseq bulk](#rnaseq-fadu)
+- [Variantes](#variantes)
 - [Pendientes](#pendientes)
 - [Literatura](#literatura)
+
 
 ---
 
@@ -202,6 +204,26 @@ Estas con algunas consideraciones importantes para el pre-procesamiento de los d
                  │ - Métodos avanzados: Banksy, │
                  │   SPACEL                     │
                  └───────────────────────────  ─┘
+
+> Octubre 6, 2025
+
+El listado de proteínas proporcionado por Pablo tiene un traslape muy bajo contra le Panel de Inmunooncológico de Xenium y de los DEGs de tumores de pacientes FA:
+
++ Intersection between Xenium and RNA-seq:
+    Number of genes in intersection: 39
+    KLRD1, IL7R, NF1, MIS18BP1, HIF1A, KRAS, VEGFA, EGFR, CDK1, NT5E, KMT2C, FAS, NOTCH2, CDK12, IL13RA2, VCAN, ITGA1, MKI67, AREG, IFIT2, CXCL2, CENPF, CEACAM8, PTEN, BRAF, IL10, CXCL3, CDK6, MET, PIK3CA, CD274, CCL16, IL1A, ORC6, IL1B, FGF2, MGP, IL1R1, ATM
+
++ Intersection between Xenium and Proteins:
+    Number of genes in intersection: 3
+    MMP9, FN1, ACTA2
+
++ Intersection between RNA-seq and Proteins:
+    Number of genes in intersection: 0
+
++ Intersection between the three sets:
+    Number of genes in intersection: 0
+
+Ahora debo hacer un análisis de enriquecimiento sobre los DEGs de Agata (Up & Down).
 
 ### RNAseq: FaDu
 
@@ -741,6 +763,21 @@ En este artículo se presenta un análisis de expresión diferencial entre las 6
 
 Intersección entre los tres conjuntos: no se identificaron genes comunes.
 Con estos resultados no se observaron procesos asociados a la remodelación de matriz extracelular, como los descritos en los datos de Ceci. Considero que analizar directamente los datos crudos de los pacientes FA frente a la línea celular FaDu (de la cual ya contamos con transcriptoma en análisis previos) podría ofrecer un contraste más claro y cercano al diseño experimental del grupo. Finalmente, tener acceso a los datos espaciales y de célula única nos abriría la posibilidad de plantear nuevas preguntas y de apoyar de manera más amplia el panel que Pablo está diseñando.
+
+
+### **Variantes:**
+
+> Octubre 1, 2025
+
+Sobre el uso de AlphaFold para la predicción de la estructura de proteínas es importante considerar lo siguiente:
+
+| AlphaFold2 predicts                   | AlphaFold2 struggles to predict                | AlphaFold2 doesn’t predict                                |
+|---------------------------------------|-----------------------------------------------|----------------------------------------------------------|
+| Single protein chains                 | Multiple conformations for the same sequence  | Protein-DNA and protein-RNA complexes                    |
+| Protein multimers                     | Effects of point mutations                    | Nucleic acid structure                                   |
+| Multisubunit protein-protein complexes| Antigen-antibody interactions                 | Ligand and ion binding                                   |
+|                                       |                                               | Post-translational modifications                         |
+|                                       |                                               | Membrane plane for transmembrane domains                 |
 
 
 ### **Pendientes:**
