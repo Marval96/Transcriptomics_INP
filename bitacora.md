@@ -779,6 +779,26 @@ Sobre el uso de AlphaFold para la predicción de la estructura de proteínas es 
 |                                       |                                               | Post-translational modifications                         |
 |                                       |                                               | Membrane plane for transmembrane domains                 |
 
+> Octubre 8, 2025
+
+La herramienta con la que se generaron los lolliplots es [lollipops](https://github.com/joiningdata/lollipops?tab=readme-ov-file). Se ejecuta en terminal de Windos y solo permite que se inserten las posicones a resaltar. Para el tener un mejor referencia y representación tomé algunas variantes ya reportadas en el portal de [St. Jude](https://pecan.stjude.cloud/variants/proteinpaint), usando el genoma de referencia h19 y las anotaciones de Malignidades hematológicas (quizá no e slo adecuado para falla medular).
+
+El códgigo para genrar las variantes:
+
+    ./lollipops -labels -legend -show-motifs -w=1400 RPL5 F3L#0000ff E25#0000ff Y31#0000ff G71E#0000ff V90A#0000ff Y99H#0000ff R108G#0000ff G201D#0000ff M236#0000ff A281T#0000ff Y86*#ff0000@9 H81#ff0000@9
+
+    ./lollipops -labels -legend -show-motifs -w=1400 RPS24 R16L#0000ff G66#ff0000@9 E98*#0000ff 
+
+     ./lollipops -labels -legend -show-motifs -w=1400 RPS26 M1#0000ff C74Y#ff0000@9
+
+    ./lollipops -labels -legend -show-motifs -w=1400 JAGN1 Q67R#0000ff L86I#0000ff H26L#ff0000@9
+
+    ./lollipops -labels -legend -show-motifs -w=1400 IFNGR1 L24L#0000ff N179N#0000ff P300P#0000ff L382S#0000ff S403F#0000ff Y47#ff0000@9
+
+    ./lollipops -labels -legend -show-motifs -w=1400 SEC61A1 I123N#0000ff I249M#0000ff R334H#0000ff R109*#ff0000@9
+
+    ./lollipops -labels -legend -show-motifs -w=1400 ELANE A13A#0000ff V31#0000ff S46S#0000ff A68V#0000ff S90P#0000ff L159Q#0000ff E171K#0000ff G200#0000ff H213Y#0000ff P234L#0000ff R258W#0000ff Y228*#ff0000@9
+
 
 ### **Pendientes:**
 
