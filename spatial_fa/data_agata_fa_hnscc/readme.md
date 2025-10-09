@@ -14,6 +14,3 @@ Figuras del análisis y código empleado:
 + fa_vs_hnscc.pptx
 + pea_fa_scc.r
 
----
-
-readme.md
