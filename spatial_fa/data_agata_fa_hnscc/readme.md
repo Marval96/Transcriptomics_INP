@@ -12,6 +12,6 @@ Análsis de enriquecimiento de vías en terminos de Gene Ontology (Procesos Biol
 + pae_go_bp_fa_scc_up.csv
 
 Figuras del análisis y código empleado:
-+ fa_vs_hnscc.pptx
++ fa_vs_hnscc.pdf
 + pea_fa_scc.r
 
