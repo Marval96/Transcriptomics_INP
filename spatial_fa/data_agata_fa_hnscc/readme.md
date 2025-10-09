@@ -5,7 +5,7 @@ Genes expresados diferencialmente entre tumores HNSCC de Px FA vs Tumores espor�
 + FA_SCC_filtered_up_genes.csv
 + Datos de Agata
 
-Análsis de enriquecimiento de vías en terminos de Gene Ontology (Procesos Biológicos):
+Análsis de enriquecimiento de vías en terminos de Gene Ontology (Procesos Biológicos) + análisis de redundancia (* redu *):
 + fa_scc_down_ora_redu_go_bp_results.csv
 + fa_scc_up_ora_redu_go_bp_results.csv
 + pae_go_bp_fa_scc_down.csv
