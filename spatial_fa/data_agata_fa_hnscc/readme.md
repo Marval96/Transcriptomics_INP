@@ -1,4 +1,4 @@
-** Los tumores de Anemia de Fanconi se caracterizan por la activación de procesos asociados a la reparación del ADN y al mantenimiento genómico, junto con una marcada atenuación de las respuestas inmunes efectoras; en contraste, los HNSCC esporádicos muestran una mayor expresión de genes vinculados a la activación inmunitaria, la presentación antigénica y la respuesta inflamatoria.**
+**Los tumores de Anemia de Fanconi se caracterizan por la activación de procesos asociados a la reparación del ADN y al mantenimiento genómico, junto con una marcada atenuación de las respuestas inmunes efectoras; en contraste, los HNSCC esporádicos muestran una mayor expresión de genes vinculados a la activación inmunitaria, la presentación antigénica y la respuesta inflamatoria.**
 
 Genes expresados diferencialmente entre tumores HNSCC de Px FA vs Tumores esporádicos HNSCC del TCGA
 + FA_SCC_filtered_down_genes.csv
