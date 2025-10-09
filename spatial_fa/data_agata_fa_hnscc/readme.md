@@ -3,6 +3,7 @@
 Genes expresados diferencialmente entre tumores HNSCC de Px FA vs Tumores esporádicos HNSCC del TCGA
 + FA_SCC_filtered_down_genes.csv
 + FA_SCC_filtered_up_genes.csv
++ Datos de Agata
 
 Análsis de enriquecimiento de vías en terminos de Gene Ontology (Procesos Biológicos):
 + fa_scc_down_ora_redu_go_bp_results.csv
