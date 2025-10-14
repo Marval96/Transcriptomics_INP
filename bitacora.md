@@ -799,6 +799,19 @@ El códgigo para genrar las variantes:
 
     ./lollipops -labels -legend -show-motifs -w=1400 ELANE A13A#0000ff V31#0000ff S46S#0000ff A68V#0000ff S90P#0000ff L159Q#0000ff E171K#0000ff G200#0000ff H213Y#0000ff P234L#0000ff R258W#0000ff Y228*#ff0000@9
 
+Octubre 13, 2025
+
+Ahora vamos a gráficar las variantes asocaidas a desórdenes en la biología de los telomeros: 
+
+     ./lollipops -labels -legend -show-motifs -w=1400 RTEL1 N117N#0000ff M320_E11splice#0000ff g450_splice_region#0000ff G596G#0000ff P647P#0000ff F676S#0000ff Q723Q#0000ff V732I#0000ff A837T#0000ff Y953*#0000ff Q954E#0000ff K1106M#0000ff P1166T#0000ff Q16fs#0000ff R655fs#0000ff Q669*#0000ff Q675fs#0000ff E941*#0000ff A940fs#0000ff E1020*#ff0000@10 c.2652+5G>T#ff0000@10 E941*#ff0000@10 V657F#ff0000@10
+
+    ./lollipops -labels -legend -show-motifs -w=1400 DKC1 A2A#0000ff A28_E2splice#0000ff A73S#0000ff F216L#0000ff K505Ddel#0000ff K505>KK#0000ff A353V#0000ff L37del#0000ff I38M#0000ff T352A#0000ff A353V#ff0000@10 A353V#ff0000@10
+
+    ./lollipops -labels -legend -show-motifs -w=1400 TINF2 E153*#0000ff S245Y#0000ff R247fs#0000ff E281K#0000ff Q414Q#0000ff T284fs#0000ff R282H#0000ff R282S#0000ff K280E#0000ff T284fs8*#ff0000@10 P431R#ff0000@10
+
+    ./lollipops -labels -legend -show-motifs -w=1400 WRAP53 L274_splice_region#0000ff V484M#0000ff A522A#0000ff L373fs#0000ff H376Y#0000ff S456fs#0000ff R409L#ff0000@10
+
+    ./lollipops -legend -labels -show-motifs -w=1400 ACD L70M#0000ff L193L#0000ff L300L#0000ff W488#0000ff I236F#0000ff S230F#0000ff C228#0000ff M226V#0000ff S224R#0000ff C228Y#ff0000@10
 
 ### **Pendientes:**
 
