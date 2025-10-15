@@ -1,0 +1,15 @@
+Intersection between Hubs FA-HNSCC and Hubs HSCC-TCGA:
+Number of genes in intersection: 0
+
+
+Intersection between Hubs FA-HNSCC and Xenium genes:
+Number of genes in intersection: 19
+KRAS, BRAF, IL10, FGF2, ATM, CENPF, IL1B, IL1A, CD274, HIF1A, NF1, ITGA1, CDK1, MET, MKI67, PTEN, EGFR, NT5E, PIK3CA
+
+Intersection between HSCC-TCGA and Xenium genes:
+Number of genes in intersection: 72
+NOTCH1, FOS, P2RX1, ITGAE, CD74, CXCR3, CXCR4, LCK, CTLA4, CCL2, CXCL9, FASLG, FLT3LG, PDCD1, FOXP3, IL2RB, CORO1A, TNFRSF17, CD40LG, SMAD3, CD19, NKG7, CDKN1A, CD79A, APOE, GZMK, CCL4, CCR5, CX3CR1, CD86, CD8A, CCL13, CXCR5, LAG3, TP53, CD2, CD38, PRF1, PLA2G7, KLRC1, CD3D, CD40, CD3E, JUN, CD27, ACTB, CTSD, SELL, CCR7, TGFB1, KLRK1, IRF8, AKT1, GZMB, IRF1, CD68, NOTCH3, FCGR3A, CD4, ERBB2, GZMH, CD247, MYD88, KLRB1, TBX21, IL10RA, SYK, TIGIT, PLEK, GZMA, CXCL10, CDKN2C
+
+Intersection between the three sets:
+Number of genes in intersection: 0
+
