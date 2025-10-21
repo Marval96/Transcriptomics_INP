@@ -18,6 +18,7 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 - [RNAseq bulk](#rnaseq-fadu)
 - [Variantes](#variantes)
 - [Pendientes](#pendientes)
+- [Spatial transcriptomics](#spatial-transcriptomics:)
 - [Literatura](#literatura)
 
 
@@ -813,6 +814,33 @@ Ahora vamos a gráficar las variantes asocaidas a desórdenes en la biología de
 
     ./lollipops -legend -labels -show-motifs -w=1400 ACD L70M#0000ff L193L#0000ff L300L#0000ff W488#0000ff I236F#0000ff S230F#0000ff C228#0000ff M226V#0000ff S224R#0000ff C228Y#ff0000@10
 
+### **Spatial Transcriptomics:**
+
+**Problema 1:** ¿cómo definir un panel de Xenium?¿Qué problemas se afrontan?¿Qué estrategias implementar para definir los genes de interés?
+
+Un poco sobre los paneles de Xenium:
+
+| Tipo de panel    | Enfoque                            | Nº de genes                         | Personalización               | Uso típico                                                                              |
+| ---------------- | ---------------------------------- | ----------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------- |
+| **<500 genes**   | Paneles “enfocados”                | 50–480 genes                        | Completamente personalizables | Estudios dirigidos a rutas, tejidos o enfermedades específicas                          |
+| **~5,000 genes** | Paneles “de descubrimiento amplio” | 5,000 genes + hasta 100 genes extra | Semi-personalizables          | Exploración más global, descubrimiento de nuevos marcadores o comparación entre tejidos |
+
+---
+
+| Característica             | <500 genes                          | 5,000 genes                               |
+| -------------------------- | ----------------------------------- | ----------------------------------------- |
+| **Enfoque**                | Específico                          | Amplio                                    |
+| **Genes incluidos**        | 50–480                              | 5,000 (+100 personalizados)               |
+| **Personalización**        | Total                               | Parcial                                   |
+| **Duración**               | 3 días                              | Hasta 6 días                              |
+| **Ideal para**             | Validar hipótesis o rutas concretas | Descubrir nuevos patrones o biomarcadores |
+| **Compatibilidad**         | FFPE / fresco / TMA                 | FFPE / fresco / TMA                       |
+| **Multiomics (proteínas)** | Sí                                  | Sí                                        |
+| **Paneles disponibles**    | 9 temáticos + custom                | 2 generales + personalizables             |
+
+
+
+
 ### **Pendientes:**
 
 + Proporciones celulares !
@@ -829,6 +857,10 @@ Ahora vamos a gráficar las variantes asocaidas a desórdenes en la biología de
     + Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization
     + Applications for single-cell and spatial transcriptomics in plant research
     + An introduction to spatial transcriptomics for biomedical research
+    + Exploring tissue architecture using spatial transcriptomics
+    + Systematic comparison of sequencing-based spatial transcriptomic methods
+
+
 
 ---
 
