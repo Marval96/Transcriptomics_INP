@@ -1,0 +1,212 @@
+================================================================================
+EXCLUSIVITY ANALYSIS: NON-FA HNSCC GENES IN IMMUNO-ONCOLOGY PANEL
+================================================================================
+
+QUESTION: Are the Non-FA HNSCC genes in the Immuno-Oncology panel exclusive or do they also
+appear in other Xenium panels (Multi, Brain, Breast, Colon, Lung, Skin)?
+
+EXECUTIVE SUMMARY:
+--------------------
+• Total Non-FA HNSCC genes in Immuno-Oncology panel: 163
+• Genes that ARE EXCLUSIVE to the IO panel: 60 (36.8%)
+• Genes that ALSO appear in other panels: 103 (63.2%)
+
+CONCLUSION:
+→ THE MAJORITY of Non-FA HNSCC genes in the IO panel also appear in OTHER panels
+
+================================================================================
+
+NON-FA HNSCC GENES EXCLUSIVE TO THE IMMUNO-ONCOLOGY PANEL:
+(These genes DO NOT appear in any other Xenium panel)
+------------------------------------------------------------
+ 1. ACTB
+ 2. AKT1
+ 3. ARID1A
+ 4. CCL11
+ 5. CCL13
+ 6. CCL2
+ 7. CCL26
+ 8. CCL3
+ 9. CCR4
+10. CCR5
+11. CD37
+12. CD74
+13. CDKN1A
+14. CDKN2A
+15. CDKN2C
+16. CDKN2D
+17. CSF1R
+18. CTSD
+19. CXCL11
+20. CXCR3
+21. EGR3
+22. FCGR2B
+23. FCRL3
+24. FGR
+25. FLT3LG
+26. FOS
+27. GZMH
+28. HLA-B
+29. ICOSLG
+30. IL10RA
+31. IL12B
+32. IL15RA
+33. IL22RA1
+34. IL22RA2
+35. IL2RB
+36. IRF1
+37. IRF2
+38. IRF3
+39. IRF5
+40. ITGAE
+41. JCHAIN
+42. JUN
+43. JUNB
+44. KLRK1
+45. LAMP1
+46. LY6E
+47. MYD88
+48. NELL2
+49. PLEK
+50. PSMB10
+51. S100A9
+52. SDC1
+53. SMAD3
+54. SOCS1
+55. SPON2
+56. SSR4
+57. TBX21
+58. TNFRSF1B
+59. VSIR
+60. ZNF683
+
+Total: 60 exclusive genes
+
+NON-FA HNSCC GENES THAT ALSO APPEAR IN OTHER PANELS:
+(These genes are in the IO panel but also in other panels)
+------------------------------------------------------------
+• AIF1: also in → Multi, Brain, Breast, Lung, Skin
+• ANXA1: also in → Brain, Colon
+• APOE: also in → Brain, Colon
+• C1QB: also in → Colon
+• CCL4: also in → Brain, Colon
+• CCR7: also in → Multi, Breast, Colon, Lung, Skin
+• CD14: also in → Multi, Brain, Breast, Colon, Lung
+• CD19: also in → Multi, Breast, Lung
+• CD1A: also in → Multi, Lung, Skin
+• CD1C: also in → Multi, Lung
+• CD2: also in → Multi, Brain, Colon, Lung
+• CD247: also in → Multi, Breast, Lung
+• CD27: also in → Multi, Breast, Lung
+• CD38: also in → Lung
+• CD3D: also in → Multi, Colon, Lung, Skin
+• CD3E: also in → Multi, Breast, Colon, Lung, Skin
+• CD4: also in → Multi, Brain, Breast, Lung
+• CD40: also in → Lung
+• CD40LG: also in → Colon, Lung, Skin
+• CD68: also in → Multi, Brain, Breast, Lung, Skin
+• CD79A: also in → Multi, Breast, Colon, Lung, Skin
+• CD79B: also in → Breast, Colon
+• CD86: also in → Multi, Brain, Breast, Lung
+• CD8A: also in → Multi, Breast, Colon, Lung, Skin
+• CD8B: also in → Colon, Lung
+• CEACAM6: also in → Breast, Colon
+• CHIT1: also in → Lung
+• CLEC10A: also in → Multi, Lung, Skin
+• CORO1A: also in → Brain
+• CPA3: also in → Multi, Breast, Colon
+• CST7: also in → Colon
+• CTLA4: also in → Multi, Breast, Colon, Lung
+• CTSB: also in → Colon
+• CTSS: also in → Brain
+• CTSW: also in → Skin
+• CX3CR1: also in → Brain, Breast
+• CXCL10: also in → Multi, Lung
+• CXCL14: also in → Brain
+• CXCL16: also in → Breast
+• CXCL9: also in → Multi, Lung
+• CXCR4: also in → Multi, Brain, Breast, Colon, Skin
+• CXCR5: also in → Colon, Lung
+• CXCR6: also in → Lung
+• DERL3: also in → Multi, Colon
+• ERBB2: also in → Multi, Breast
+• FASLG: also in → Brain, Lung
+• FCER1A: also in → Multi, Breast, Lung, Skin
+• FCER2: also in → Colon
+• FCGR3A: also in → Multi, Brain, Breast, Lung
+• FCMR: also in → Lung
+• FKBP11: also in → Multi, Colon, Lung
+• FOXP3: also in → Multi, Breast, Colon, Lung
+• GATA2: also in → Multi, Colon, Skin
+• GNLY: also in → Multi, Brain, Breast, Colon
+• GPR171: also in → Lung
+• GZMA: also in → Multi, Brain, Breast, Colon, Lung
+• GZMB: also in → Multi, Lung
+• GZMK: also in → Multi, Breast, Colon, Lung, Skin
+• HAVCR2: also in → Multi, Breast, Lung
+• HPGDS: also in → Multi, Colon, Lung
+• IDO1: also in → Brain, Skin
+• IL2RA: also in → Multi, Breast, Skin
+• IL2RG: also in → Breast
+• IRF8: also in → Multi, Colon, Lung, Skin
+• KLRB1: also in → Multi, Brain, Breast, Colon, Lung, Skin
+• KLRC1: also in → Multi, Breast, Lung
+• LAG3: also in → Multi, Breast, Lung
+• LCK: also in → Lung, Skin
+• LILRA4: also in → Multi, Breast, Colon, Lung
+• LILRB4: also in → Multi, Lung
+• LTB: also in → Breast, Colon, Skin
+• MMP12: also in → Breast, Lung
+• MS4A1: also in → Multi, Breast, Colon, Lung
+• MS4A2: also in → Multi, Colon, Lung
+• MZB1: also in → Multi, Breast, Lung, Skin
+• NKG7: also in → Multi, Brain, Breast, Colon, Lung
+• NOTCH1: also in → Brain
+• NOTCH3: also in → Skin
+• P2RX1: also in → Lung
+• PAX5: also in → Colon
+• PDCD1: also in → Multi, Breast, Lung
+• PLA2G7: also in → Multi, Lung
+• PLD4: also in → Multi, Breast
+• PLVAP: also in → Lung, Skin
+• PRF1: also in → Multi, Breast
+• RGS1: also in → Skin
+• RORC: also in → Breast, Colon
+• RUNX3: also in → Lung
+• S100B: also in → Lung, Skin
+• SELL: also in → Multi, Breast, Colon, Lung
+• SOCS3: also in → Colon
+• SOX17: also in → Multi, Breast, Skin
+• SPIB: also in → Multi, Breast, Colon, Lung
+• SYK: also in → Lung
+• TCF7: also in → Breast
+• TCL1A: also in → Multi, Breast, Colon, Lung
+• TFF3: also in → Skin
+• TGFB1: also in → Brain
+• TIGIT: also in → Breast, Colon
+• TNFRSF17: also in → Multi, Breast, Colon, Lung, Skin
+• TP53: also in → Brain
+• TRAT1: also in → Colon
+• TREM2: also in → Multi, Brain, Lung
+
+Total: 103 shared genes
+
+COMPARISON WITH FA-HNSCC:
+------------------------------
+• FA-HNSCC genes exclusive to the IO panel: 20 genes
+• Non-FA HNSCC genes exclusive to the IO panel: 60 genes
+• FA-HNSCC genes shared with other panels: 19 genes
+• Non-FA HNSCC genes shared with other panels: 103 genes
+
+→ Non-FA HNSCC has MORE genes exclusive to the IO panel than FA-HNSCC
+
+IMPLICATIONS FOR YOUR EXPERIMENT:
+----------------------------------------
+• The Immuno-Oncology panel gives you access to unique Non-FA HNSCC genes
+• Specifically, 60 Non-FA HNSCC genes would be exclusively
+  accessible via the Immuno-Oncology panel
+• The other 103 Non-FA HNSCC genes in the IO panel could also
+  be studied using other Xenium panels if needed
+
+• TOTAL unique genes of the IO panel (FA + Non-FA): 80 genes
+• This represents a significant added value of the Immuno-Oncology panel

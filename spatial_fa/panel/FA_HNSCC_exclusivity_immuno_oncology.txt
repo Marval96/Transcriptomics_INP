@@ -1,0 +1,77 @@
+================================================================================
+EXCLUSIVITY ANALYSIS: FA-HNSCC GENES IN THE IMMUNO-ONCOLOGY PANEL
+================================================================================
+
+QUESTION: Are the FA-HNSCC genes present in the Immuno-Oncology panel exclusive
+or do they also appear in other Xenium panels (Multi, Brain, Breast, Colon, Lung, Skin)?
+
+EXECUTIVE SUMMARY:
+--------------------
+• Total FA-HNSCC genes in Immuno-Oncology panel: 39
+• Genes that ARE UNIQUE to the IO panel: 20 (51.3%)
+• Genes that ALSO appear in other panels: 19 (48.7%)
+
+CONCLUSION:
+→ THE MAJORITY of FA-HNSCC genes in the IO panel are UNIQUE
+
+================================================================================
+
+FA-HNSCC GENES UNIQUE TO THE IMMUNO-ONCOLOGY PANEL:
+(These genes DO NOT appear in any other Xenium panel)
+------------------------------------------------------------
+ 1. ATM
+ 2. BRAF
+ 3. CCL16
+ 4. CDK12
+ 5. FGF2
+ 6. IFIT2
+ 7. IL10
+ 8. IL13RA2
+ 9. IL1A
+10. IL1R1
+11. ITGA1
+12. KMT2C
+13. KRAS
+14. NF1
+15. NOTCH2
+16. NT5E
+17. ORC6
+18. PIK3CA
+19. PTEN
+20. VEGFA
+
+Total: 20 unique genes
+
+FA-HNSCC GENES ALSO FOUND IN OTHER PANELS:
+(These genes are in the IO panel but also present in other panels)
+------------------------------------------------------------
+• AREG: also in → Colon, Lung, Skin
+• CD274: also in → Multi, Breast, Lung
+• CDK1: also in → Multi, Brain, Lung, Skin
+• CDK6: also in → Colon
+• CEACAM8: also in → Breast
+• CENPF: also in → Multi, Brain, Breast, Lung, Skin
+• CXCL2: also in → Multi
+• CXCL3: also in → Colon
+• EGFR: also in → Multi, Brain, Breast, Colon, Lung
+• FAS: also in → Multi, Lung
+• HIF1A: also in → Lung
+• IL1B: also in → Colon, Skin
+• IL7R: also in → Multi, Brain, Breast, Colon, Lung
+• KLRD1: also in → Multi, Breast, Colon, Lung
+• MET: also in → Multi, Lung
+• MGP: also in → Skin
+• MIS18BP1: also in → Lung
+• MKI67: also in → Multi, Brain, Breast, Colon, Lung, Skin
+• VCAN: also in → Multi, Brain, Colon
+
+Total: 19 shared genes
+
+IMPLICATIONS FOR YOUR EXPERIMENT:
+----------------------------------------
+• If you choose the Immuno-Oncology panel, you will have access to FA-HNSCC genes
+  that are not available in other Xenium panels
+• Specifically, 20 FA-HNSCC genes would be exclusively
+  accessible via the Immuno-Oncology panel
+• The other 19 FA-HNSCC genes in the IO panel could also
+  be studied using alternative Xenium panels if needed

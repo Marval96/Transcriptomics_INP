@@ -816,6 +816,8 @@ Ahora vamos a gráficar las variantes asocaidas a desórdenes en la biología de
 
 ### **Spatial Transcriptomics:**
 
+> Octubre 22, 2025
+
 **Problema 1:** ¿cómo definir un panel de Xenium?¿Qué problemas se afrontan?¿Qué estrategias implementar para definir los genes de interés?
 
 Un poco sobre los paneles de Xenium:
@@ -838,7 +840,7 @@ Un poco sobre los paneles de Xenium:
 | **Multiomics (proteínas)** | Sí                                  | Sí                                        |
 | **Paneles disponibles**    | 9 temáticos + custom                | 2 generales + personalizables             |
 
-
+La carpeta panel contiene un análsis de intersección para definir que panel de Xenium comparte mayor número de elementos con los DEGs de los tumores HNSCC de pacientes con y sin FA. En este caso es el panel **Immuno-Oncology**
 
 
 ### **Pendientes:**
