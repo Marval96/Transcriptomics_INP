@@ -840,7 +840,11 @@ Un poco sobre los paneles de Xenium:
 | **Multiomics (proteínas)** | Sí                                  | Sí                                        |
 | **Paneles disponibles**    | 9 temáticos + custom                | 2 generales + personalizables             |
 
-La carpeta panel contiene un análsis de intersección para definir que panel de Xenium comparte mayor número de elementos con los DEGs de los tumores HNSCC de pacientes con y sin FA. En este caso es el panel **Immuno-Oncology**
+La carpeta panel contiene un análsis de intersección para definir que panel de Xenium comparte mayor número de elementos con los DEGs de los tumores HNSCC de pacientes con y sin FA. En este caso es el panel **Immuno-Oncology**. 
+
+> Noviembre 11, 2025.
+
+Es necesario explorar el panel IO de Xenium para ver si realmente representa procesos de inflamación, EMT, remodelación de la cromatina y firma de queratinocitos. El análisis de intersección muestra genes importantes para la EMT como: ZEB1, ZEB2, COL5A2, ITGB1, LAMA3, SOX2. También será necesario agregar E-Chaderina, Vimentina y TGB pues estos genes son representativos de la EMT. **La clave de todo es encontrar genes que realmente represente procesos biológicos para agregarlos como add-on.**
 
 
 ### **Pendientes:**
