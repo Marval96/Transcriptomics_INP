@@ -866,6 +866,21 @@ Es necesario explorar el panel IO de Xenium para ver si realmente representa pro
     + Exploring tissue architecture using spatial transcriptomics
     + Systematic comparison of sequencing-based spatial transcriptomic methods
 
++ Revisar estos aartículos para evaluar el clsutering:
+
+    + Extended methods for spatial cell classification with DBSCAN-CellX
+    + Benchmarking spatial clustering methods with spatially resolved transcriptomics data 
+    + Benchmarking computational methods for detecting spatial domains and domain-specific spatially variable genes from spatial transcriptomics data 
+    + Benchmarking clustering, alignment, and integration methods for spatial transcriptomics
+    + A comprehensive comparison on clustering methods for multi-slice spatially resolved transcriptomics data analysis
+    + Benchmarking cell-type clustering methods for spatially resolved transcriptomics data 
+    + Computational solutions for spatial transcriptomics
+    + A Review of Computational Methods for Clustering Genes with Similar Biological Functions
+    + 10 - Cluster Analysis: Basic Concepts and Methods
+    + A comprehensive survey of traditional, merge-split and evolutionary approaches proposed for determination of cluster number
+    + Spatial statistics is a comprehensive tool for quantifying cell neighbor relationships and biological processes via tissue image analysis
+    + A raster-based spatial clustering method with robustness to spatial outliers
+    + Clustering spatial transcriptomics data
 
 
 ---
