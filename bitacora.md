@@ -846,6 +846,9 @@ La carpeta panel contiene un análsis de intersección para definir que panel de
 
 Es necesario explorar el panel IO de Xenium para ver si realmente representa procesos de inflamación, EMT, remodelación de la cromatina y firma de queratinocitos. El análisis de intersección muestra genes importantes para la EMT como: ZEB1, ZEB2, COL5A2, ITGB1, LAMA3, SOX2. También será necesario agregar E-Chaderina, Vimentina y TGB pues estos genes son representativos de la EMT. **La clave de todo es encontrar genes que realmente represente procesos biológicos para agregarlos como add-on.**
 
+> Noviembre 18, 2025
+
+El número de clusters, vecinos y como evaluamos estás métricas son esenciales para enocntrar patrones en nuestros datos aunque estos patrones deben conservarse en el espacio, por lo cual **siempre hay que validar los resultados de los algoritmos en las imágnes.** Para el clustering se puede usar: K-means, hierarchiCal y DBSCAN. Para medir la caldiad del clustering se puede usar: Silhouette Score, Calinski Harabaz Index, Davies Bouldin index, etc. **Los algoritmos a utilizar deberán considerar la distribución espacial de los datos.** [Ref.](https://www.comet.com/site/blog/how-to-evaluate-clustering-models-in-python/)
 
 ### **Pendientes:**
 
@@ -866,7 +869,7 @@ Es necesario explorar el panel IO de Xenium para ver si realmente representa pro
     + Exploring tissue architecture using spatial transcriptomics
     + Systematic comparison of sequencing-based spatial transcriptomic methods
 
-+ Revisar estos aartículos para evaluar el clsutering:
++ Revisar estos artículos para evaluar el clsutering:
 
     + Extended methods for spatial cell classification with DBSCAN-CellX
     + Benchmarking spatial clustering methods with spatially resolved transcriptomics data 
@@ -881,6 +884,19 @@ Es necesario explorar el panel IO de Xenium para ver si realmente representa pro
     + Spatial statistics is a comprehensive tool for quantifying cell neighbor relationships and biological processes via tissue image analysis
     + A raster-based spatial clustering method with robustness to spatial outliers
     + Clustering spatial transcriptomics data
+    + A cluster-based cell-type deconvolution of spatial transcriptomic data
+    + SCIMAP: A Python Toolkit for Integrated Spatial Analysis of Multiplexed Imaging Data
+    + Tissue schematics map the specialization of immune tissue motifs and their appropriation by tumors
+    
+Mañana revisar:
+
++ STEAM: Spatial Transcriptomics Evaluation Algorithm and Metric for clustering performance
++ SCIMAP: A Python Toolkit for Integrated Spatial Analysis of Multiplexed Imaging Data
++ Tissue schematics map the specialization of immune tissue motifs and their appropriation by tumors
++ https://scimap.xyz/Functions/tl/spatial_cluster/
++ Chemotherapy induces myeloid-driven spatially confined T cell exhaustion in ovarian cancer
++ Tribus: semi-automated discovery of cell identities and phenotypes from multiplexed imaging and proteomic data
+
 
 
 ---
