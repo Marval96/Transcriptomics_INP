@@ -897,6 +897,54 @@ Mañana revisar:
 + Chemotherapy induces myeloid-driven spatially confined T cell exhaustion in ovarian cancer
 + Tribus: semi-automated discovery of cell identities and phenotypes from multiplexed imaging and proteomic data
 
+> Diciembre 8, 2025.
+
+**Tutorial de Scimap**
+
+[Mastering Spatial Analysis of Multiplex Imaging Data with SCIMAP](https://scimap.xyz/tutorials/md/spatial_biology_scimap/)
+
+El material relacionado se encuentra en: 
+
+    /scimap_tutorial
+
+Instalación: 
+
+    conda create --name scimap -y python=3.10
+    conda activate scimap
+    pip install scimap
+
+El resto del material estará en scimap_tutorial.ipynb
+
+Los datos muestra pesan 287 Mb :S
+
+> Diciembre 15, 2025
+
+**TIM3:** este es el interactoma de la porteína
+
+| **Gen**     | **Nombre / proteína**     | **Función principal**                        | **Impacto en la inmunidad**                                             | **Relación con TIM-3 (HAVCR2)**        | **Resumen funcional**                                                            |
+| ----------- | ------------------------- | -------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------- |
+| **HAVCR2**  | TIM-3 (CD366)             | Receptor inhibitorio (immune checkpoint)     | Induce exhaustión de linfocitos T y NK; disminuye IFN-γ y citotoxicidad | —                                      | Checkpoint tardío asociado a inmunosupresión profunda y resistencia a PD-1       |
+| **LGALS9**  | Galectina-9               | Lectina secretada; ligando inmunomodulador   | Apoptosis de Th1, exhaustión CD8, inhibición NK                         | ✅ **Ligando directo clásico**          | Eje TIM-3–Gal-9 es uno de los mecanismos inmunosupresores más potentes en cáncer |
+| **LGALS9B** | Galectina-9 isoforma      | Variante transcripcional                     | Modulación contextual de inmunosupresión                                | ⚠️ Funcionalmente relacionada          | Puede ajustar intensidad o localización de señal TIM-3                           |
+| **LGALS9C** | Galectina-9 isoforma      | Variante transcripcional                     | Similar a LGALS9                                                        | ⚠️ Funcionalmente relacionada          | Relevante en análisis transcriptómicos finos (RNA-seq)                           |
+| **HMGB1**   | High Mobility Group Box 1 | DAMP / alarmina nuclear                      | Activa inmunidad innata vía TLRs cuando está libre                      | ✅ **Ligando directo**                  | TIM-3 secuestra HMGB1 → reduce presentación antigénica                           |
+| **BAG6**    | BAT3                      | Adaptador intracelular                       | Mantiene activación de T cells                                          | ✅ **Interacción intracelular directa** | Switch molecular: su liberación activa señal inhibitoria de TIM-3                |
+| **CD274**   | PD-L1                     | Ligando de PD-1                              | Inhibición de activación T                                              | 🔁 **Co-expresión funcional**          | TIM-3 aparece cuando PD-1/PD-L1 ya no es suficiente                              |
+| **CD80**    | B7-1                      | Co-estimulación (CD28) / inhibición (CTLA-4) | Regula activación vs tolerancia                                         | 🔁 **Contexto funcional**              | Refleja fallo de co-estimulación en TME inmunosupresor                           |
+| **CD86**    | B7-2                      | Co-estimulación T                            | Activación temprana de T cells                                          | 🔁 **Contexto funcional**              | TIM-3 predomina cuando CD86 no logra activar respuesta                           |
+| **CEACAM1** | CEACAM-1                  | Adhesión celular e inhibición inmune         | Reduce activación T y NK                                                | ⚠️ **Interacción controversial**       | Posible cooperación inhibitoria con TIM-3                                        |
+| **CADM1**   | Cell Adhesion Molecule 1  | Adhesión celular / sinapsis                  | Organización del contacto célula-célula                                 | 🔁 **Interacción estructural**         | Puede facilitar clustering de TIM-3 en sinapsis inmunológica                     |
+
+    SIN ligando:
+    TIM-3 ── BAG6 ──► T cell activa (PERMISIVO)
+
+    CON ligando (LGALS9 / HMGB1):
+    TIM-3 ──┤ BAG6 se libera
+            └─► FYN / fosfatasas
+                ↓ TCR signaling
+                Exhaustión
+
+c576383 (Panel Adds on)
 
 
 ---
