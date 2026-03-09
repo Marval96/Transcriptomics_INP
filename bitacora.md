@@ -20,6 +20,7 @@ Bitácora de trabajo durante el periodo agosto 2025-enero 2026.
 - [Pendientes](#pendientes)
 - [Spatial transcriptomics](#spatial-transcriptomics:)
 - [Literatura](#literatura)
+- [TDA](#TDA)
 
 
 ---
@@ -955,6 +956,11 @@ c576383 (Panel Adds on)
 
 ---
 
+### **TDA: Topological Data Analysis**
 
+El primer paso es clonar el [repostorio](https://github.com/Luis0815/topkat-explorer-app#), en este caso lo hice en Windows:
 
+    git clone https://github.com/Luis0815/topkat-explorer-app.git
+
+Posteriormete se descargan los datos que se indican en el repo y se ejecuta el script de app.R de Luis. 
 
