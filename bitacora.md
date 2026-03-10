@@ -954,6 +954,34 @@ c576383 (Panel Adds on)
 
 + [Spatial transcriptomics identifies molecular niche dysregulation associated with distal lung remodeling in pulmonary fibrosis](https://www.nature.com/articles/s41588-025-02080-x)
 
+**Firmas SCC para evaluar el panel de Xenium:**
+
+| Título del trabajo                                                                 | Acceso     |
+|-----------------------------------------------------------------------------|------------|
+| Differentially expressed genes in HNSCC tissues, normal oral epithelial tissues and CAFs | GSE172120 |
+| Single-cell transcriptomic characterization primary HNSCC tumors             | GSE173964  |
+| Single cell RNA sequencing of head and neck squamous carcinoma (HNSCC) patient sample | GSE185965 |
+| Transcriptomic characterization of paired primary and recurrent HNSCC tumors | GSE173855 |
+| Gene expression in normal and tumor samples from patients with HNSCC | GSE58911 |
+| Single-cell transcriptome profiling of the stepwise progression of head and neck cancer | GSE181919 |
+| RNA-sequencing: HNSCC tissue and adjacent normal tissue | GSE159382 |
+| Gene expression in cancerous and paraneoplastic tissues of patients with head and neck squamous cell carcinoma |
+| Single-cell atlas of head and neck squamous cell carcinoma | GSE140042 |
+| Investigation of head and neck squamous carcinoma (HNSCC) spatial transcriptome evolution | GSE178537 |
+| Bulk RNA-Seq of head and neck squamous cell carcinomas | GSE310041 |
+| Single-cell transcriptomic profiling for inferring tumor origin and mechanisms of therapeutic resistance  | GSE213047 |
+| Gene expression signatures and molecular markers associated with clinical outcome in locally advanced head and neck carcinoma | GSE23036 |
+| Bulk RNA-seq profiling of human head and neck squamous cell carcinoma (HNSCC) with primary tumors and metastatic lymph nodes | GSE286234 |
+
+**Revisar literatura:**
+
++ Single-cell RNA sequencing identifies ZBP1-dependent mechanisms in OSCC progression 
++ Single-cell transcriptome profiling of the stepwise progression of head and neck cancer
++ Application of single-cell RNA sequencing in head and neck squamous cell carcinoma
++ Multiregional single-cell transcriptomics reveals an association between partial EMT and immunosuppressive states in oral squamous cell carcinoma
+
+
+
 ---
 
 ### **TDA: Topological Data Analysis**
