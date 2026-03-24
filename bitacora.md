@@ -980,6 +980,15 @@ c576383 (Panel Adds on)
 + Application of single-cell RNA sequencing in head and neck squamous cell carcinoma
 + Multiregional single-cell transcriptomics reveals an association between partial EMT and immunosuppressive states in oral squamous cell carcinoma
 
+**Revisar literatura sobre variantes en el espacio**
++ Spatial transcriptomics: Technologies, applications and experimental considerations
++ Systematic analysis identifies a connection between spatial and genomic variations of chromatin states
++ A novel m7G regulator-based methylation patterns in head and neck squamous cell carcinoma 
++ Welcome to stSNV!: http://bio-bigdata.hrbmu.edu.cn/stSNV/index.jsp
++ stSNV: a comprehensive resource of SNVs in spatial transcriptome
++ A practical guide to spatial transcriptomics
++ Spatiotemporal omics for biology and medicine
++ An introduction to spatial transcriptomics for biomedical research
 
 
 ---
