@@ -381,9 +381,9 @@ Nota: el scrip original no funcional con la imagen recortada.
 
 El resultado luce asi:
 
-![cropp](/home/jrmarval/cycif/training/output/illumination_correction/ss_image_cropped.ome.png)
+![cropp](ss_image_cropped.ome.png)
 ---
-![segmentación](/home/jrmarval/cycif/training/output/illumination_correction/masks_mesmer/ss_mask_image_cropped.ome.png)
+![segmentación](ss_mask_image_cropped.ome.png)
 
 ### **Quantification**
 
