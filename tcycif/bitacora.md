@@ -381,6 +381,92 @@ Nota: el scrip original no funcional con la imagen recortada.
 
 El resultado luce asi:
 
-![cropp](ss_image_cropped.ome.png)
+![cropp](/home/jrmarval/cycif/training/output/illumination_correction/ss_image_cropped.ome.png)
 ---
-![segmentación](ss_mask_image_cropped.ome.png)
+![segmentación](/home/jrmarval/cycif/training/output/illumination_correction/masks_mesmer/ss_mask_image_cropped.ome.png)
+
+### **Quantification**
+
+Se realizó la extracción de datos a nivel de célula a partir de una imagen OME-TIFF utilizando máscaras de segmentación (Mesmer).
+
+Este es el primer paso para hacer el procesamiento de los datos de las imagenes derivadas de CyCIF. Primero hay que generar un ambiente conda:
+
+        conda env create -f quantification.yml
+
+Posteriormente hay que instalar via terminal:
+
+        sudo apt-get install parallel
+
+El siguiente paso para analizar solo una imagen es ejecutar el script 'cli.py':
+
+        #!/usr/bin/env python3
+
+        # Script for parsing command line arguments and running single-cell
+        # data extraction functions
+        # Joshua Hess
+
+        # cli.py
+        from ParseInput import ParseInput  # Now matches the renamed function
+        from SingleCellDataExtraction import MultiExtractSingleCells
+
+        def main():
+        args = ParseInput()  # Now matches the function name
+        MultiExtractSingleCells(**args)
+
+        if __name__ == '__main__':
+        main()
+
+El repositorio de Cruz indica ejecutar por linea de comandos de la siguiente manera: 
+
+conda activate quantification
+
+        python cli.py \
+        --masks "/path/to/masks/mask.ome.tif" \
+        --image "/path/to/images/image.ome.tif" \
+        --channel_names "/path/to/metadata/channels.csv" \
+        --output "/path/to/output"
+
+Sin embargo, yo preferi hacerlo a traves de un Script de Python 'run_quantification.py':
+
+        # Script para ejecutar el script 'run_quantification.py' mas limpia.
+
+        import subprocess
+
+        cmd = [
+        "python", "cli.py",
+        "--masks", "/home/jrmarval/cycif/training/output/illumination_correction/masks_mesmer/image_cropped.ome.tif",
+        "--image", "/home/jrmarval/cycif/training/output/illumination_correction/image_cropped.ome.tif",
+        "--channel_names", "/home/jrmarval/cycif/training/channels_5_cycles_clean.csv",
+        "--output", "/home/jrmarval/cycif/training/output/illumination_correction/quantification"
+        ]
+
+        subprocess.run(cmd, check=True)
+
+**Nota:** el archivo de los caneles csv no debe contenr *header*, es decir, la primer fila debe ser el primer marcador en lugar 'ABS'. 
+
+**Resultado:** se obtine una matriz 'image_cropped_image_cropped.csv' que luce de esta manera:
+
+| CellID | Hoechst_0 | Hoechst_1 | Ki67    | CD3d    | yH2AX   | Hoechst_2 | CD4     | CD11c   | CD31    | Hoechst_3 | IBA1    | CD68    | CD8a    | Hoechst_4 | CD163   | CK7     | PD_1    | Hoechst_5 | CD45RO | Vimentin | CD20   | X_centroid | Y_centroid | Area | MajorAxisLength | MinorAxisLength | Eccentricity | Solidity | Extent | Orientation |
+| ------ | --------- | --------- | ------- | ------- | ------- | --------- | ------- | ------- | ------- | --------- | ------- | ------- | ------- | --------- | ------- | ------- | ------- | --------- | ------ | -------- | ------ | ---------- | ---------- | ---- | --------------- | --------------- | ------------ | -------- | ------ | ----------- |
+| 1      | 3338.25   | 3357.37   | 2277.83 | 1954.20 | 1211.70 | 2275.41   | 1299.41 | 1227.70 | 1189.79 | 2046.75   | 1217.12 | 1515.29 | 6810.70 | 1207.87   | 3143.66 | 4771.29 | 1208.95 | 711.00    | 692.95 | 539.37   | 861.25 | 457.29     | 56.41      | 24.0 | 6.58            | 4.60            | 0.71         | 0.96     | 0.80   | 0.40        |
+| 2      | 7497.04   | 6995.66   | 2312.96 | 1971.06 | 1208.09 | 6670.49   | 1341.80 | 1267.70 | 1193.67 | 6199.67   | 1232.84 | 1523.93 | 6371.96 | 3082.67   | 2426.07 | 7673.66 | 1224.89 | 1715.09   | 698.56 | 596.35   | 872.06 | 452.07     | 59.95      | 65.0 | 9.34            | 8.85            | 0.32         | 0.95     | 0.80   | 0.61        |
+| 3      | 5524.50   | 6589.00   | 2207.75 | 1937.75 | 1186.75 | 7363.50   | 1291.25 | 1270.00 | 1189.00 | 4882.50   | 1212.25 | 1510.75 | 5360.75 | 3687.75   | 3641.00 | 4875.00 | 1193.00 | 2216.25   | 682.00 | 531.00   | 878.25 | 446.50     | 60.50      | 4.0  | 2.0             | 2.0             | 0.0          | 1.0      | 1.0    | -0.78       |
+
+Se obtuvo una matriz de cuantificación a nivel de célula a partir de imágenes CycIF procesadas. Cada fila representa una célula segmentada y cada columna corresponde a la intensidad de un marcador o propiedad morfológica.
+
+Estructura de los datos:
++ CellID: Identificador único por célula
++ Marcadores: Intensidad media por canal (proteínas)
++ Propiedades morfológicas: Área, forma y posición espacial
+
+Interpretación:
+
+Cada valor corresponde a la intensidad promedio por célula en un canal específico.
++ Los canales Hoechst_* corresponden a tinciones nucleares en diferentes ciclos.
++ Marcadores como:
++ CD3d, CD4, CD8a → células T
++ CD68, CD163 → macrófagos
++ CK7 → células epiteliales
++ PD_1 → estado de agotamiento inmune
++ Las variables espaciales (X_centroid, Y_centroid) permiten análisis de organización tisular.
+
