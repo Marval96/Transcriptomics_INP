@@ -470,3 +470,35 @@ Cada valor corresponde a la intensidad promedio por célula en un canal específ
 + PD_1 → estado de agotamiento inmune
 + Las variables espaciales (X_centroid, Y_centroid) permiten análisis de organización tisular.
 
+### **Quality Control**
+
+Primer paso... crear un ambiente Conda:
+
+        conda create -n cylinter -c conda-forge -c labsyspharm cylinter=0.0.50 napari=0.4.18 vispy=0.12.1 pydantic=1.10.14 lxml=5.2.1 -y
+---
+        conda activate cylinter
+---
+        pip install lxml_html_clean
+---
+
+
+El comando para correr el analsiis es:
+
+        cylinter <input_dir>/cylinter_config.yml
+
+Para ellos es importante que la estructura del directorio sea la siguiente:
+
+        (cylinter) jrmarval@BMFLAB:~/cycif/training/output/illumination_correction/qc/INPUT_DIR$ tree
+        .
+        ├── csv
+        │   └── image_cropped.csv
+        ├── cylinter_config.yml
+        ├── markers.csv
+        ├── mask
+        │   └── image_cropped.tif
+        ├── seg
+        │   └── image_cropped.tif
+        └── tif
+        └── image_cropped.tif
+
+Qu[e se hace una vez que se abre Napari?]
