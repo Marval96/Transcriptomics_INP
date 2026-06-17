@@ -60,6 +60,430 @@ Comando para matar procesos y procesos derivados:
 
 **Nota: ambos comandos se deben correr desde el equipo local no desde el servidor.**
 
+### **Equipos con dual Boot Windows-Francia**
+
+El siguientee código es para solucinar la falla en la visualización de linux durante el arranque:
+
+    # Bitácora técnica: recuperación de arranque Linux en equipo Dell con dual boot Windows/Linux
+
+    ## 1. Contexto del problema
+
+    El equipo del laboratorio tiene configuración **dual boot** con:
+
+    * **Windows** como sistema operativo nativo/principal.
+    * **Linux/Ubuntu** instalado en otra partición/disco.
+    * Arranque en modo **UEFI**.
+    * Equipo Dell.
+
+    Después de una actualización del equipo/Windows/BIOS, al encender la computadora ya no aparecía la opción de iniciar Linux/Ubuntu. El sistema arrancaba directamente en Windows o solo mostraba opciones como:
+
+    * `Windows Boot Manager`
+    * `UEFI RST PC801 NVMe...`
+    * opciones de red como `ONBOARD NIC`
+    * `UEFI HTTPS Boot`
+
+    No aparecía una entrada explícita llamada `ubuntu`, `Linux`, `GRUB` o similar.
+
+    ---
+
+    ## 2. Diagnóstico inicial
+
+    Al entrar al BIOS con **F2** y revisar:
+
+    ```text
+    Boot Configuration → Boot Sequence
+    ```
+
+    solo se observaba claramente:
+
+    ```text
+    Windows Boot Manager
+    UEFI RST PC801 NVMe...
+    UEFI RST PC801 NVMe...
+    ONBOARD NIC IPv4
+    ONBOARD NIC IPv6
+    UEFI HTTPS Boot
+    ```
+
+    También se verificó que el almacenamiento estaba en modo:
+
+    ```text
+    Storage → RAID On / Intel RST
+    ```
+
+    Importante: **no se cambió RAID On a AHCI**, porque hacerlo sin preparar Windows puede causar que Windows deje de arrancar.
+
+    ---
+
+    ## 3. Causa probable
+
+    La actualización de Windows o del firmware/BIOS probablemente modificó o eliminó la entrada UEFI explícita de Ubuntu/GRUB en el menú de arranque.
+
+    Esto no significa que Linux se haya borrado.
+
+    En este caso, Linux seguía instalado, pero el BIOS Dell ya no lo mostraba como `ubuntu`. En su lugar, el arranque podía hacerse seleccionando manualmente una de las entradas genéricas del disco:
+
+    ```text
+    UEFI RST PC801 NVMe...
+    ```
+
+    Finalmente, la **segunda entrada `UEFI RST PC801 NVMe...`** permitió arrancar Linux.
+
+    ---
+
+    ## 4. Verificación de que Linux seguía instalado
+
+    Se arrancó el equipo con una USB live de Ubuntu usando:
+
+    ```text
+    F12 → seleccionar USB → Try Ubuntu / Probar Ubuntu
+    ```
+
+    Importante: se usó **Try Ubuntu / Probar Ubuntu**, no **Install Ubuntu / Instalar Ubuntu**.
+
+    Desde la terminal de la USB live se ejecutó:
+
+    ```bash
+    lsblk -f
+    ```
+
+    Se observaron particiones relevantes:
+
+    ```text
+    nvme1n1p3   vfat   FAT32
+    nvme1n1p4   ext4
+    ```
+
+    Interpretación:
+
+    * `nvme1n1p4` correspondía a la partición Linux instalada.
+    * `nvme1n1p3` correspondía a una partición EFI asociada al arranque.
+    * `sda1` correspondía a la USB live de Ubuntu.
+
+    La presencia de una partición `ext4` indicaba que Linux seguía instalado.
+
+    ---
+
+    ## 5. Montaje de la partición Linux
+
+    Desde la USB live de Ubuntu se montó la partición Linux:
+
+    ```bash
+    sudo mount /dev/nvme1n1p4 /mnt
+    ```
+
+    Después se verificó su contenido:
+
+    ```bash
+    ls /mnt
+    ```
+
+    Se observaron carpetas típicas de un sistema Linux:
+
+    ```text
+    bin  boot  dev  etc  home  lib  media  opt  proc  root  sbin  sys  usr  var
+    ```
+
+    Esto confirmó que la partición Linux seguía intacta.
+
+    ---
+
+    ## 6. Montaje de la partición EFI
+
+    Se montó la partición EFI:
+
+    ```bash
+    sudo mount /dev/nvme1n1p3 /mnt/boot/efi
+    ```
+
+    Luego se revisó su contenido:
+
+    ```bash
+    ls /mnt/boot/efi/EFI
+    ```
+
+    Se observaron carpetas como:
+
+    ```text
+    BOOT  Dell  ubuntu
+    ```
+
+    Esto confirmó que aún existían archivos de arranque relacionados con Ubuntu.
+
+    ---
+
+    ## 7. Preparación del entorno `chroot`
+
+    Para reparar o actualizar GRUB desde el sistema Linux instalado, se montaron los directorios necesarios:
+
+    ```bash
+    sudo mount --bind /dev /mnt/dev
+    sudo mount --bind /proc /mnt/proc
+    sudo mount --bind /sys /mnt/sys
+    ```
+
+    Luego se entró al sistema instalado usando `chroot`:
+
+    ```bash
+    sudo chroot /mnt
+    ```
+
+    El prompt cambió a algo similar a:
+
+    ```bash
+    root@ubuntu:/#
+    ```
+
+    Esto indica que ya se estaba trabajando “dentro” del Linux instalado, no en la USB live.
+
+    ---
+
+    ## 8. Reparación de GRUB
+
+    Dentro del entorno `chroot`, se reinstaló GRUB en modo UEFI:
+
+    ```bash
+    grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ubuntu --recheck
+    ```
+
+    Después se actualizó la configuración de GRUB:
+
+    ```bash
+    update-grub
+    ```
+
+    Luego se salió del `chroot`:
+
+    ```bash
+    exit
+    ```
+
+    ---
+
+    ## 9. Desmontaje y reinicio
+
+    Después de salir del `chroot`, se desmontaron las particiones y directorios usados:
+
+    ```bash
+    sudo umount /mnt/boot/efi
+    sudo umount /mnt/dev
+    sudo umount /mnt/proc
+    sudo umount /mnt/sys
+    sudo umount /mnt
+    ```
+
+    Finalmente, se reinició el equipo:
+
+    ```bash
+    reboot
+    ```
+
+    Durante el reinicio, Ubuntu live mostró el mensaje:
+
+    ```text
+    Please remove the installation medium, then press ENTER
+    ```
+
+    Se retiró la USB y se presionó **Enter**.
+
+    ---
+
+    ## 10. Resultado final
+
+    Al reiniciar y entrar al menú de arranque con **F12**, la opción explícita `ubuntu` aún no aparecía. Sin embargo, se probaron las entradas UEFI del disco.
+
+    La entrada que funcionó fue:
+
+    ```text
+    UEFI RST PC801 NVMe...    segunda opción
+    ```
+
+    Al seleccionar esa segunda entrada, el sistema arrancó correctamente en Linux.
+
+    ---
+
+    ## 11. Procedimiento rápido si vuelve a ocurrir
+
+    ### Paso 1: entrar al menú de arranque
+
+    Apagar la computadora.
+
+    Encender y presionar repetidamente:
+
+    ```text
+    F12
+    ```
+
+    ### Paso 2: probar las entradas del disco
+
+    En el menú de arranque, probar:
+
+    ```text
+    UEFI RST PC801 NVMe...    segunda opción
+    ```
+
+    Si no funciona, probar la primera entrada:
+
+    ```text
+    UEFI RST PC801 NVMe...    primera opción
+    ```
+
+    No seleccionar opciones de red:
+
+    ```text
+    ONBOARD NIC IPv4
+    ONBOARD NIC IPv6
+    UEFI HTTPS Boot
+    ```
+
+    ### Paso 3: si ninguna entrada arranca Linux
+
+    Usar USB live de Ubuntu:
+
+    ```text
+    F12 → UEFI USB → Try Ubuntu / Probar Ubuntu
+    ```
+
+    Después ejecutar:
+
+    ```bash
+    lsblk -f
+    ```
+
+    Identificar:
+
+    * partición Linux: normalmente `ext4`
+    * partición EFI: normalmente `vfat` o `FAT32`
+
+    En este caso específico:
+
+    ```text
+    Linux: /dev/nvme1n1p4
+    EFI:   /dev/nvme1n1p3
+    ```
+
+    Montar Linux:
+
+    ```bash
+    sudo mount /dev/nvme1n1p4 /mnt
+    ```
+
+    Verificar:
+
+    ```bash
+    ls /mnt
+    ```
+
+    Montar EFI:
+
+    ```bash
+    sudo mount /dev/nvme1n1p3 /mnt/boot/efi
+    ```
+
+    Verificar:
+
+    ```bash
+    ls /mnt/boot/efi/EFI
+    ```
+
+    Preparar `chroot`:
+
+    ```bash
+    sudo mount --bind /dev /mnt/dev
+    sudo mount --bind /proc /mnt/proc
+    sudo mount --bind /sys /mnt/sys
+    sudo chroot /mnt
+    ```
+
+    Reinstalar GRUB:
+
+    ```bash
+    grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ubuntu --recheck
+    update-grub
+    exit
+    ```
+
+    Desmontar:
+
+    ```bash
+    sudo umount /mnt/boot/efi
+    sudo umount /mnt/dev
+    sudo umount /mnt/proc
+    sudo umount /mnt/sys
+    sudo umount /mnt
+    ```
+
+    Reiniciar:
+
+    ```bash
+    reboot
+    ```
+
+    Quitar la USB cuando aparezca:
+
+    ```text
+    Please remove the installation medium, then press ENTER
+    ```
+
+    Presionar **Enter**.
+
+    ---
+
+    ## 12. Notas importantes
+
+    No cambiar en BIOS:
+
+    ```text
+    RAID On / Intel RST
+    ```
+
+    a:
+
+    ```text
+    AHCI
+    ```
+
+    sin preparar Windows antes. Cambiarlo directamente puede provocar que Windows no arranque.
+
+    No usar:
+
+    ```text
+    Install Ubuntu
+    Erase disk
+    Format partition
+    Delete partition
+    ```
+
+    Usar únicamente:
+
+    ```text
+    Try Ubuntu / Probar Ubuntu
+    ```
+
+    si solo se quiere reparar el arranque.
+
+    Los comandos usados en esta reparación no borran datos. Los comandos `mount`, `chroot`, `grub-install` y `update-grub` sirven para acceder al sistema instalado y reparar el cargador de arranque.
+
+    ---
+
+    ## 13. Resumen breve
+
+    El problema no fue que Linux se borrara.
+    Linux seguía instalado en la partición `ext4`:
+
+    ```text
+    /dev/nvme1n1p4
+    ```
+
+    El problema fue que el BIOS/UEFI de Dell dejó de mostrar la entrada explícita `ubuntu`.
+
+    Se verificó que Linux seguía instalado usando una USB live de Ubuntu, se montó la partición Linux y la partición EFI, se reinstaló GRUB y finalmente se logró arrancar Linux seleccionando manualmente la segunda entrada:
+
+    ```text
+    UEFI RST PC801 NVMe...
+    ```
+
+
 ---
 
 ### Spatial Transcriptomics: Lung 
